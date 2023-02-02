@@ -1,24 +1,24 @@
 ---
 # Display name
-title: Shunyang Wang (王顺阳)
+title: Alice Wu (吳恩達)
 
 # Is this the primary user of the site?
 superuser: true
 
 # Role/position
-role: 'Scientist, Computational Metabolomics'
+role: ''
 
 # Status emoji
-status: 
+status:
   icon: ☕️
 
 # Organizations/Affiliations
 #organizations:
-#- name: Brightseed
-#  url: "https://brightseedbio.com/"
+#- name: 腾讯
+#  url: ""
 
 # Short bio (displayed in user profile at end of posts)
-bio: My research interests include Quantum Chemistry, Metabolomics and Machine Learning.
+bio: My research interests include distributed robotics, mobile computing and programmable matter.
 
 #interests:
 #- Artificial Intelligence
@@ -28,11 +28,14 @@ bio: My research interests include Quantum Chemistry, Metabolomics and Machine L
 #education:
 #  courses:
 #  - course: PhD in Artificial Intelligence
-#    institution: University of California, Davis
-#    year: 2022
-#  - course: BSc in Applied Chemistry
-#    institution: Shandong
-#    year: 2018
+#    institution: Stanford University
+#    year: 2012
+#  - course: MEng in Artificial Intelligence
+#    institution: Massachusetts Institute of Technology
+#    year: 2009
+#  - course: BSc in Artificial Intelligence
+#    institution: Massachusetts Institute of Technology
+#    year: 2008
 
 # Social/Academic Networking
 # For available icons, see: https://wowchemy.com/docs/getting-started/page-builder/#icons
