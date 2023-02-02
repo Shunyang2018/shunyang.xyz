@@ -6,8 +6,8 @@
 # Appearance
 
 appearance:
-  theme_day: custom
-  theme_night: custom
+  theme_day: Minimal
+  theme_night: 1950s
   font: minimal
   font_size: L
 
