@@ -49,7 +49,6 @@ experience:
     date_end: '2017-09-01'
     description: 'advisor: Xinhao Zhang'
 
-
 design:
   columns: '1'
 ---
