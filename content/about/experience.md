@@ -24,7 +24,7 @@ date_format: Jan 2006
 experience:
   - title: Scientist
     company: Brightseed
-    company_url: 'https://www.brightseedbio.com/'
+    company_url: https://www.brightseedbio.com/
     company_logo: org-bs
     location: South San Francisco, CA
     date_start: '2023-02-01'
@@ -48,7 +48,7 @@ experience:
     date_start: '2017-06'
     date_end: '2017-07'
     description: advisor: Xinhao Zhang
-    
+
 
 design:
   columns: '1'
