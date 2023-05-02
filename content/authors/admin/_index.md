@@ -61,7 +61,7 @@ social:
     link: uploads/resume.pdf
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
-# email: "lygwangshunyang@gmail.com"
+email: "lygwangshunyang@gmail.com"
 ---
 
 Shunyang Wang is a scientist of computational metabolomics at Brightseed. His research interests include Cheminformatics, Quantum Chemistry and Machine Learning. He works cross-disciplinary to leverage big data to discover new bioactive.
