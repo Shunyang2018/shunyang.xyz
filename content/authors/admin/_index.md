@@ -1,16 +1,16 @@
 ---
 # Display name
-title: Alice Wu (吳恩達)
+title: Shunyang Wang (王顺阳)
 
 # Is this the primary user of the site?
 superuser: true
 
 # Role/position
-role: ''
+role: 'Scientist, Computational Metabolomics'
 
 # Status emoji
 status:
-  icon: ☕️
+  icon: ⚛️
 
 # Organizations/Affiliations
 #organizations:
@@ -20,10 +20,11 @@ status:
 # Short bio (displayed in user profile at end of posts)
 bio: My research interests include distributed robotics, mobile computing and programmable matter.
 
-#interests:
-#- Artificial Intelligence
-#- Computational Linguistics
-#- Information Retrieval
+interests:
+- Computational Metabolomics
+- Quantum Chemistry
+- Machine Learning
+- Cheminformatics
 
 #education:
 #  courses:
