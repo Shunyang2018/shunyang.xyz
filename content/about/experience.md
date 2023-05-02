@@ -25,7 +25,7 @@ experience:
   - title: Scientist
     company: Brightseed
     company_url: 'https://www.brightseedbio.com/'
-    company_logo: org-bs
+    company_logo: org-gc
     location: South_San_Francisco
     date_start: '2023-02-01'
     date_end: ''
@@ -43,7 +43,7 @@ experience:
   - title: Internship
     company: Peking University Shenzhen Graduate School
     company_url: ''
-    company_logo: org-pk
+    company_logo: org-gc
     location: Shenzhen
     date_start: '2017-07-01'
     date_end: '2017-09-01'
