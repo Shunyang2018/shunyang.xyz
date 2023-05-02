@@ -40,6 +40,16 @@ experience:
     date_end: '2022-09-26'
     description: Retention time prediction by Graph Neural Network
 
+  - title: Internship
+    company: Peking University Shenzhen Graduate School
+    company_url: ''
+    company_logo: org-pku
+    location: Shenzhen, China
+    date_start: '2017-06'
+    date_end: '2017-07'
+    description: advisor: Xinhao Zhang
+    
+
 design:
   columns: '1'
 ---
