@@ -21,10 +21,11 @@ status:
 bio: My research interests include distributed robotics, mobile computing and programmable matter.
 
 interests:
-- Computational Metabolomics
+- Metabolomics
 - Quantum Chemistry
 - Machine Learning
 - Cheminformatics
+- Drug Discovery
 
 #education:
 #  courses:
@@ -55,23 +56,19 @@ social:
   - icon: linkedin
     icon_pack: fab
     link: https://www.linkedin.com/in/shunyang-wang/
-# Uncomment below for Github link
-#- icon: github
-#  icon_pack: fab
-#  link: https://github.com/gcushen
+
 
 # Link to a PDF of your resume/CV from the About widget.
 # To enable, copy your resume/CV to `static/files/cv.pdf` and uncomment the lines below.
-# - icon: cv
-#   icon_pack: ai
-#   link: files/cv.pdf
+ - icon: cv
+   icon_pack: ai
+   link: uploads/resume.pdf
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
-#email: ""
+email: "lygwangshunyang@gmail.com"
 ---
 
-Alice Wu is a professor of artificial intelligence at the Stanford AI Lab. Her research interests include distributed robotics, mobile computing and programmable matter. She leads the Robotic Neurobiology group, which develops self-reconfiguring robots, systems of self-organizing robots, and mobile sensor networks.
+Shunyang Wang is a scientist of computational metabolomics at Brightseed. His research interests include Cheminformatics, Quantum Chemistry and Machine Learning. He works cross-disciplinary to leverage big data to discover new bioactive.
 
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed neque elit, tristique placerat feugiat ac, facilisis vitae arcu. Proin eget egestas augue. Praesent ut sem nec arcu pellentesque aliquet. Duis dapibus diam vel metus tempus vulputate.
 
 {{< icon name="download" pack="fas" >}} {{< staticref "uploads/resume.pdf" "newtab" >}}Download{{< /staticref >}} my resumé as a PDF.
