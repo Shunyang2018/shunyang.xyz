@@ -45,8 +45,8 @@ experience:
     company_url: ''
     company_logo: org-pku
     location: Shenzhen, China
-    date_start: 'July 2017'
-    date_end: 'Sept 2017'
+    date_start: '2017-07-01'
+    date_end: '2017-09-01'
     description: 'advisor: Xinhao Zhang'
 
 
