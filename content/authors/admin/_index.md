@@ -20,6 +20,13 @@ status:
 # Short bio (displayed in user profile at end of posts)
 bio: My research interests include distributed robotics, mobile computing and programmable matter.
 
+interests:
+- Metabolomics
+- Quantum Chemistry
+- Machine Learning
+- Cheminformatics
+- Drug Discovery
+
 #education:
 #  courses:
 #  - course: PhD in Artificial Intelligence
