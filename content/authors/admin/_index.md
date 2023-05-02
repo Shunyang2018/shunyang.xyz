@@ -48,10 +48,13 @@ social:
     link: 'about/#contact' # For a direct email link, use "mailto:test@example.org".
   - icon: twitter
     icon_pack: fab
-    link: https://twitter.com/wowchemy
-  - icon: instagram
+    link: https://twitter.com/ShunyangWang
+  - icon: github
     icon_pack: fab
-    link: https://instagram.com/geocushen
+    link: https://github.com/Shunyang2018
+  - icon: linkedin
+    icon_pack: fab
+    link: https://www.linkedin.com/in/shunyang-wang/
 # Uncomment below for Github link
 #- icon: github
 #  icon_pack: fab
