@@ -37,8 +37,8 @@ experience:
 
   - title: BS in Applied Chemistry
     company: Shandong University, Weihai
-    company_url: 'https://mc.wh.sdu.edu.cn/index.html'
-    company_logo: SDU
+    company_url: 'https://mc.wh.sdu.edu.cn/index.htm'
+    company_logo: UCD
     location: Weihai, China
     date_start: '2014-09-01'
     date_end: '2018-6-31'
