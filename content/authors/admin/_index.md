@@ -56,6 +56,9 @@ social:
   - icon: linkedin
     icon_pack: fab
     link: https://www.linkedin.com/in/shunyang-wang/
+  - icon: google-scholar
+    icon_pack: fab
+    link: https://scholar.google.com/citations?user=OYJKSNYAAAAJ&hl=en
   - icon: cv
     icon_pack: ai
     link: uploads/resume.pdf

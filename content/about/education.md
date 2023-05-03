@@ -24,24 +24,28 @@ date_format: Jan 2006
 experience:
   - title: Ph.D. in Chemistry and Chemical Biology
     company: University of California, Davis
-    company_url: ''
-    company_logo: org-x
-    location: California
+    company_url: 'https://chemistry.ucdavis.edu/'
+    company_logo: UCD
+    location: Davis, California
     date_start: '2018-09-04'
     date_end: '2023-11-18'
     description: |2-
+        * Mentor: Dr. Dean J. Tantillo, Dr. Tobias Kind, Dr. Oliver Fiehn
         * Dissertation: Theoretical and experimental explorations on compound identification in metabolomics  
         * Theoretical and experimental explorations on compound identification in metabolomics
         * Build of high-resolution mass spectral library with Electron and Chemical Ionization source
 
-  - title: BEng Electronic Engineering
-    company: University X
-    company_url: ''
-    company_logo: org-x
-    location: California, Davis
-    date_start: '2016-01-01'
-    date_end: '2020-12-31'
-    description: My dissertation was on X
+  - title: B.S. in Applied Chemistry
+    company: Shandong University, Weihai
+    company_url: 'https://mc.wh.sdu.edu.cn/index.htm'
+    company_logo: SDU
+    location: Weihai, China
+    date_start: '2014-09-01'
+    date_end: '2018-6-31'
+    description: |2-
+        * Mentor: Dr. Haibei Li, Dr. Ming bai
+        * Dissertation: Theoretical study on the intermolecular interactions between polyfluorene, polythiophene, and single-walled carbon nanotubes
+        * Marine College Soccer Team
 
 design:
   columns: '1'

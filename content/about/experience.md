@@ -26,7 +26,7 @@ experience:
     company: Brightseed
     company_url: 'https://www.brightseedbio.com/'
     company_logo: BSD
-    location: South_San_Francisco
+    location: South San Francisco
     date_start: '2023-02-01'
     date_end: ''
     description: Computational Metabolomics Scientist
@@ -35,7 +35,7 @@ experience:
     company: Brightseed
     company_url: 'https://www.brightseedbio.com/'
     company_logo: BSD
-    location: South_San_Francisco
+    location: South San Francisco
     date_start: '2022-06-26'
     date_end: '2022-09-26'
     description: |2-
@@ -48,7 +48,7 @@ experience:
     company: Peking University Shenzhen Graduate School
     company_url: 'https://web.pkusz.edu.cn/wu/'
     company_logo: PKU
-    location: Shenzhen
+    location: Shenzhen, China
     date_start: '2017-07-01'
     date_end: '2017-09-01'
     description:  |2-
