@@ -36,7 +36,7 @@ experience:
         * Theoretical and experimental explorations on compound identification in metabolomics
         * Build of high-resolution mass spectral library with Electron and Chemical Ionization source
 
-#
+
   - title: BS in Applied Chemistry
     company: Shandong University, Weihai
     company_url: 'https://mc.wh.sdu.edu.cn/index.htm'
