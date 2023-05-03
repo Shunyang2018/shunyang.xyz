@@ -51,8 +51,9 @@ experience:
     location: Shenzhen
     date_start: '2017-07-01'
     date_end: '2017-09-01'
-    description:  'Advisor: Xinhao Zhang
-      publication: Computational exploration of reactive fragment for mechanism-based inhibition of xanthine oxidase.  '
+    description:  |2-
+            Advisor: Xinhao Zhang
+            Publication: Computational exploration of reactive fragment for mechanism-based inhibition of xanthine oxidase\ 
 
 
 design:
