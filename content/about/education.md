@@ -30,7 +30,6 @@ experience:
     date_start: '2018-09-04'
     date_end: '2023-11-18'
     description: |2-
-
         * Mentor: Dean J Tantillo, Tobias Kind, Oliver Fiehn
         * Dissertation: Theoretical and experimental explorations on compound identification in metabolomics  
         * Theoretical and experimental explorations on compound identification in metabolomics
@@ -45,7 +44,6 @@ experience:
     date_start: '2014-09-01'
     date_end: '2018-6-31'
     description: |2-
-
         * Mentor: Haibei Li, Ming bai
         * Dissertation: Theoretical study on the intermolecular interactions between polyfluorene, polythiophene, and single-walled carbon nanotubes
         * Marine College Soccer Team
