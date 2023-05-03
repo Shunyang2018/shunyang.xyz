@@ -55,7 +55,7 @@ experience:
     description:  |2-
 
         * Mentor: Xinhao Zhang
-        `* Publication: Computational exploration of reactive fragment for mechanism-based inhibition of xanthine oxidase`
+        * Publication: Computational exploration of reactive fragment for mechanism-based inhibition of xanthine oxidase
 
 
 
