@@ -31,23 +31,29 @@ experience:
     date_end: ''
     description: Computational Metabolomics Scientist
 
-  - title: Internship
+  - title: PhD Internship
     company: Brightseed
     company_url: ''
-    company_logo: org-x
+    company_logo: BSD
     location: South_San_Francisco
     date_start: '2022-06-26'
     date_end: '2022-09-26'
-    description: Retention time prediction by Graph Neural Network
+    description: |2-
+          Retention time prediction by Graph Neural Network
+          Internal annotation of millions spectra
+          Heavy-hitters search engine on Pubmed/Pubchem and LOTUS
+
 
   - title: Internship
     company: Peking University Shenzhen Graduate School
     company_url: ''
-    company_logo: org-gc
+    company_logo: PKU
     location: Shenzhen
     date_start: '2017-07-01'
     date_end: '2017-09-01'
-    description: 'Advisor: Xinhao Zhang'
+    description: |2-
+            Advisor: Xinhao Zhang
+            Publication: Computational exploration of reactive fragment for mechanism-based inhibition of xanthine oxidase
 
 design:
   columns: '1'
