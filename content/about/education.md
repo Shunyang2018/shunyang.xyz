@@ -22,7 +22,7 @@ date_format: Jan 2006
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
-  - title: Ph\.D\. in Chemistry and Chemical Biology
+  - title: PhD in Chemistry and Chemical Biology
     company: University of California, Davis
     company_url: 'https://chemistry.ucdavis.edu/'
     company_logo: UCD
@@ -37,7 +37,7 @@ experience:
         * Build of high-resolution mass spectral library with Electron and Chemical Ionization source
 
 #
-  - title: B\.S\. in Applied Chemistry
+  - title: BS in Applied Chemistry
     company: Shandong University, Weihai
     company_url: 'https://mc.wh.sdu.edu.cn/index.htm'
     company_logo: SDU
@@ -46,7 +46,7 @@ experience:
     date_end: '2018-6-31'
     description: |2-
 
-        * Mentor: Dr. Haibei Li, Dr. Ming bai
+        * Mentor: Haibei Li, Ming bai
         * Dissertation: Theoretical study on the intermolecular interactions between polyfluorene, polythiophene, and single-walled carbon nanotubes
         * Marine College Soccer Team
 
