@@ -22,7 +22,7 @@ date_format: Jan 2006
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
-  - title: Ph.D. in Chemistry and Chemical Biology
+  - title: Ph\.D\. in Chemistry and Chemical Biology
     company: University of California, Davis
     company_url: 'https://chemistry.ucdavis.edu/'
     company_logo: UCD
@@ -30,8 +30,8 @@ experience:
     date_start: '2018-09-04'
     date_end: '2023-11-18'
     description: |2-
-    
-        * Mentor: Dr. Dean J. Tantillo, Dr. Tobias Kind, Dr. Oliver Fiehn
+
+        * Mentor: Dean J Tantillo, Tobias Kind, Oliver Fiehn
         * Dissertation: Theoretical and experimental explorations on compound identification in metabolomics  
         * Theoretical and experimental explorations on compound identification in metabolomics
         * Build of high-resolution mass spectral library with Electron and Chemical Ionization source
