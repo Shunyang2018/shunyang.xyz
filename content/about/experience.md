@@ -39,9 +39,10 @@ experience:
     date_start: '2022-06-26'
     date_end: '2022-09-26'
     description: |2-
-          * Retention time prediction by Graph Neural Network
-          * Internal annotation of millions spectra
-          * Heavy-hitters search engine on Pubmed/Pubchem and LOTUS
+
+        * Retention time prediction by Graph Neural Network
+        * Internal annotation of millions spectra
+        * Heavy-hitters search engine on Pubmed/Pubchem and LOTUS
 
 
   - title: Internship
@@ -52,8 +53,9 @@ experience:
     date_start: '2017-07-01'
     date_end: '2017-09-01'
     description:  |2-
-            * Mentor: Xinhao Zhang
-            `* Publication: Computational exploration of reactive fragment for mechanism-based inhibition of xanthine oxidase`
+
+        * Mentor: Xinhao Zhang
+        `* Publication: Computational exploration of reactive fragment for mechanism-based inhibition of xanthine oxidase`
 
 
 
