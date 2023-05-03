@@ -33,20 +33,20 @@ experience:
 
   - title: PhD Internship
     company: Brightseed
-    company_url: ''
+    company_url: 'https://www.brightseedbio.com/'
     company_logo: BSD
     location: South_San_Francisco
     date_start: '2022-06-26'
     date_end: '2022-09-26'
     description: |2-
-          Retention time prediction by Graph Neural Network
-          Internal annotation of millions spectra
-          Heavy-hitters search engine on Pubmed/Pubchem and LOTUS
+          * Retention time prediction by Graph Neural Network
+          * Internal annotation of millions spectra
+          * Heavy-hitters search engine on Pubmed/Pubchem and LOTUS
 
 
   - title: Internship
     company: Peking University Shenzhen Graduate School
-    company_url: ''
+    company_url: 'https://web.pkusz.edu.cn/wu/'
     company_logo: PKU
     location: Shenzhen
     date_start: '2017-07-01'
@@ -54,6 +54,7 @@ experience:
     description: |2-
             Advisor: Xinhao Zhang
             Publication: Computational exploration of reactive fragment for mechanism-based inhibition of xanthine oxidase
+            
 
 design:
   columns: '1'
