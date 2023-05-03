@@ -53,8 +53,7 @@ experience:
     date_end: '2017-09-01'
     description:  |2-
             Advisor: Xinhao Zhang
-            Publication: Computational exploration of
-                      reactive fragment for mechanism-based inhibition of xanthine oxidase
+
 
 
 design:
