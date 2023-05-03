@@ -23,10 +23,10 @@ date_format: Jan 2006
 #   Leave other parameters empty if not required.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 description:  |2-
-      * 2015&2017 | China National Scholarship
-      * 2021 | Metabolomics Service Cores Best Presentation Award, Metabolomics Association of North America annual conference
-      * 2022 | American Society for Mass Spectrometry Graduate Student Travel Award
-      * 2022 | Edmund and Wilma Fink Memorial Award, UCD Chemistry
+      `* 2015&2017 | China National Scholarship`
+      `* 2021 | Metabolomics Service Cores Best Presentation Award, Metabolomics Association of North America annual conference`
+      `* 2022 | American Society for Mass Spectrometry Graduate Student Travel Award`
+      `* 2022 | Edmund and Wilma Fink Memorial Award, UCD Chemistry`
 
 design:
   columns: '1'
