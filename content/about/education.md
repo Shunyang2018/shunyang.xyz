@@ -35,10 +35,9 @@ experience:
         * Theoretical and experimental explorations on compound identification in metabolomics
         * Build of high-resolution mass spectral library with Electron and Chemical Ionization source
 
-
   - title: BS in Applied Chemistry
     company: Shandong University, Weihai
-    company_url: 'https://mc.wh.sdu.edu.cn/index.htm'
+    company_url: 'https://mc.wh.sdu.edu.cn/index.html'
     company_logo: SDU
     location: Weihai, China
     date_start: '2014-09-01'
@@ -47,7 +46,6 @@ experience:
         * Mentor: Haibei Li, Ming bai
         * Dissertation: Theoretical study on the intermolecular interactions between polyfluorene, polythiophene, and single-walled carbon nanotubes
         * Marine College Soccer Team
-
 
 design:
   columns: '1'
