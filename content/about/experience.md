@@ -25,7 +25,7 @@ experience:
   - title: Scientist
     company: Brightseed
     company_url: 'https://www.brightseedbio.com/'
-    company_logo: org-gc
+    company_logo: BSD
     location: South_San_Francisco
     date_start: '2023-02-01'
     date_end: ''
