@@ -37,7 +37,7 @@ experience:
         * Build of high-resolution mass spectral library with Electron and Chemical Ionization source
 
 #
-  - title: B.S. in Applied Chemistry
+  - title: B\.S\. in Applied Chemistry
     company: Shandong University, Weihai
     company_url: 'https://mc.wh.sdu.edu.cn/index.htm'
     company_logo: SDU
