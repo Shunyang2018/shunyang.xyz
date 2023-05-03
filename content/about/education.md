@@ -30,7 +30,7 @@ experience:
     date_start: '2018-09-04'
     date_end: '2023-11-18'
     description: |2-
-        * Mentor: Dr. Dean J. Tantillo, Dr. Tobias Kind, Dr. Oliver Fiehn
+        * Mentor: `Dr. Dean J. Tantillo, Dr. Tobias Kind, Dr. Oliver Fiehn`
         * Dissertation: Theoretical and experimental explorations on compound identification in metabolomics  
         * Theoretical and experimental explorations on compound identification in metabolomics
         * Build of high-resolution mass spectral library with Electron and Chemical Ionization source
