@@ -6,21 +6,21 @@ title: Shunyang Wang (王顺阳)
 superuser: true
 
 # Role/position
-role: ''
+role: 'Scientist, Computational Metabolomics'
 
 # Status emoji
 status:
   icon: ⚛️
 
 # Organizations/Affiliations
-#organizations:
-#- name: 腾讯
-#  url: ""
+organizations:
+- name: Brightseed
+  url: "https://www.brightseedbio.com/"
 
 # Short bio (displayed in user profile at end of posts)
-bio: My research interests include distributed robotics, mobile computing and programmable matter.
+bio: My research interests include metabolomics, cheminformatics and quantum chemistry.
 
-interests:
+Interests:
 - Metabolomics
 - Quantum Chemistry
 - Machine Learning
@@ -38,7 +38,11 @@ interests:
 #  - course: BSc in Artificial Intelligence
 #    institution: Massachusetts Institute of Technology
 #    year: 2008
-
+Awards:
+    - 2015&2017 | China National Scholarship
+    - 2021 | Metabolomics Service Cores Best Presentation Award, Metabolomics Association of North America annual conference
+    - 2022 | American Society for Mass Spectrometry Graduate Student Travel Award
+    - 2022 | Edmund and Wilma Fink Memorial Award, UCD Chemistry
 # Social/Academic Networking
 # For available icons, see: https://wowchemy.com/docs/getting-started/page-builder/#icons
 #   For an email link, use "fas" icon pack, "envelope" icon, and a link in the
@@ -57,17 +61,18 @@ social:
     icon_pack: fab
     link: https://www.linkedin.com/in/shunyang-wang/
   - icon: google-scholar
-    icon_pack: fab
-    link: https://scholar.google.com/citations?user=OYJKSNYAAAAJ&hl=en
-  - icon: cv
     icon_pack: ai
-    link: uploads/resume.pdf
+    link: https://scholar.google.com/citations?user=OYJKSNYAAAAJ&hl=en
+    
+#  - icon: cv
+#    icon_pack: ai
+#    link: uploads/resume.pdf
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
 #email: "lygwangshunyang@gmail.com"
 ---
 
-Shunyang Wang is a scientist of computational metabolomics at Brightseed. His research interests include Cheminformatics, Quantum Chemistry and Machine Learning. He works cross-disciplinary to leverage big data to discover new bioactive.
+Shunyang Wang is a scientist of computational metabolomics at Brightseed. He leverages big data to find solutions.
 
 
 {{< icon name="download" pack="fas" >}} {{< staticref "uploads/resume.pdf" "newtab" >}}Download{{< /staticref >}} my resumé as a PDF.

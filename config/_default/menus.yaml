@@ -10,6 +10,9 @@ main:
   - name: Resumé
     url: about/
     weight: 20
-  - name: Notes
-    url: notes/
+  - name: Posts
+    url: posts/
     weight: 30
+  - name: Projects
+    url: #portfolio
+    weight: 40
