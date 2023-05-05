@@ -10,7 +10,7 @@ headless: true
 # Order that this section appears on the page.
 weight: 30
 
-title: 'Projects'
+title: ''
 subtitle: ''
 
 content:
@@ -32,7 +32,7 @@ content:
       tag: ML
     - name: Quantum Chemistry
       tag: QM
-    - name: Metabolomics
+    - name: Computational Metabolomics
       tag: Meta
 
 design:
