@@ -28,12 +28,12 @@ content:
   filter_button:
     - name: All
       tag: '*'
-    - name: Machine Learning
-      tag: ML
     - name: Quantum Chemistry
       tag: QM
     - name: Computational Metabolomics
       tag: Meta
+    - name: Cheminfomatics
+      tag: Chem
 
 design:
   columns: '1'
