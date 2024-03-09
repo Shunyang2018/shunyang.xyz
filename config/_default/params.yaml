@@ -17,7 +17,7 @@ marketing:
   seo:
     site_type: Person
     local_business_type: ''
-    org_name: ''
+    # org_name: ''
     description: 'Shunyang Wang's personal website.'
     twitter: 'shunyang_wang'
   analytics:
