@@ -1,6 +1,7 @@
 ---
 # Display name
-title: Shunyang Wang (王顺阳)
+title: Shunyang Wang 
+title_chinese: 王顺阳
 
 # Is this the primary user of the site?
 superuser: true
@@ -78,7 +79,7 @@ social:
 email: "lygwangshunyang@gmail.com"
 ---
 
-Shunyang Wang is a scientist of computational metabolomics at Brightseed. He leverages big data to find solutions.
+Shunyang Wang is a computational chemistry scientist with a passion for leveraging big data to solve real-world problems. He is fascinated by building models that uncover and explain the underlying rules of nature. A firm believer in the power of science to make the world a better place, Shunyang enjoys reading, cooking, surfing, hiking, e-gaming, and soccer. If you're a fellow foodie, he’s sure to be a great friend.
 
 
 {{< icon name="download" pack="fas" >}} {{< staticref "uploads/resume.pdf" "newtab" >}}Download{{< /staticref >}} my resumé as a PDF.
