@@ -18,8 +18,8 @@ marketing:
     site_type: Person
     local_business_type: ''
     org_name: ''
-    description: 'A highly-customizable Hugo blog theme powered by Wowchemy website builder.'
-    twitter: 'wowchemy'
+    description: 'Shunyang Wang's personal website'
+    twitter: 'ShunyangWang'
   analytics:
     google_analytics: ''
     baidu_tongji: ''
@@ -33,11 +33,11 @@ header:
   navbar:
     enable: true
     align: r
-    show_logo: false
+    show_logo: true
     show_language: false
     show_day_night: true
     show_search: true
-    highlight_active_link: false
+    highlight_active_link: true
 
 footer:
   copyright:
@@ -67,7 +67,7 @@ features:
   privacy_pack:
     enable: false
   repository:
-    url: 'https://github.com/<username>/<repository>'
+    url: 'https://github.com/Shunyang2018/shunyang.xyz'
     content_dir: content
     branch: main
   avatar:

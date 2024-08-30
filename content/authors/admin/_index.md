@@ -63,13 +63,19 @@ social:
   - icon: google-scholar
     icon_pack: ai
     link: https://scholar.google.com/citations?user=OYJKSNYAAAAJ&hl=en
+  - icon: orcid
+    icon_pack: fab
+    link: https://orcid.org/0000-0001-9851-2968
+  - icon: cv
+    icon_pack: ai
+    link: uploads/resume.pdf
     
 #  - icon: cv
 #    icon_pack: ai
 #    link: uploads/resume.pdf
 
 # Enter email to display Gravatar (if Gravatar enabled in Config)
-#email: "lygwangshunyang@gmail.com"
+email: "lygwangshunyang@gmail.com"
 ---
 
 Shunyang Wang is a scientist of computational metabolomics at Brightseed. He leverages big data to find solutions.
