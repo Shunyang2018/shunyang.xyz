@@ -69,7 +69,7 @@ social:
     link: https://orcid.org/0000-0001-9851-2968
   - icon: cv
     icon_pack: ai
-    link: uploads/resume.pdf
+    link: uploads/CV_Shunyang_2025.pdf
     
 #  - icon: cv
 #    icon_pack: ai
