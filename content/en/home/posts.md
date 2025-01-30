@@ -1,8 +1,5 @@
 ---
-# A section created with the Portfolio widget.
-# This section displays content from `content/project/`.
-# See https://wowchemy.com/docs/widget/portfolio/
-block: collection
+widget: pages  # Change from 'collection' to 'pages'
 
 title: 'Recent Posts'
 
@@ -12,29 +9,19 @@ headless: true
 # Order that this section appears on the page.
 weight: 20
 
-
 content:
-  # Page type to display. E.g. project.
-  count: 5
-  # Default filter index (e.g. 0 corresponds to the first `filter_button` instance below).
+  count: 5  # Limit to 5 most recent posts
   filters:
     folders:
-        - posts
-    author: ""
-    category: ""
-    tag: ""
-    exclude_featured: false
+      - posts
+    recursive: true
     exclude_future: false
     exclude_past: false
-    publication_type: ""
-      # Choose how many pages you would like to offset by
-  offset: 0
-      # Page order: descending (desc) or ascending (asc) date.
+    exclude_featured: false
   order: desc
+
 design:
-      # Choose a layout view
   view: compact
   columns: '2'
-
 
 ---
