@@ -13,8 +13,6 @@ links:
     url: ''
 ---
 
-# Run a Free Local LLM and Share It with Your Family and Friends in 4 Hours
-
 ## Introduction
 
 The release of the distilled DeepSeek-R1 model has revolutionized the field. I decided to build one locally, and to my surprise, the process was smoother than I expected. With the knowledge I had, I was able to deploy the model and allow my family to access it through ZeroTier. This tutorial will guide you through setting up a local DeepSeek-R1 model using Open WebUI, ZeroTier, and Docker on Windows with an NVIDIA RTX 3090. (According to my tests, an AMD Ryzen 5900X can also support basic functions, albeit with a response time of several minutes.) By following these steps, you'll be able to run DeepSeek-R1 locally and share it with your family and friends over the network.
