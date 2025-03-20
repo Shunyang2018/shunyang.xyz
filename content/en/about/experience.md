@@ -25,7 +25,7 @@ experience:
   - title: Machine Learning and Computational Chemistry Scientist
     company: Genentech
     company_url: 'https://www.gene.com/'
-    company_logo: GEN
+    company_logo: GEN.png
     location: South San Francisco
     date_start: '2025-03-10'
     date_end: ''
