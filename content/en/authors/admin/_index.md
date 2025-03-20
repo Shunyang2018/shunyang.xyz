@@ -7,7 +7,7 @@ title_chinese: 王顺阳
 superuser: true
 
 # Role/position
-role: 'Scientist, Computational Metabolomics'
+role: 'Machine Learning and Computational Chemistry Scientist'
 
 # Status emoji
 status:
@@ -15,8 +15,8 @@ status:
 
 # Organizations/Affiliations
 organizations:
-- name: Brightseed
-  url: "https://www.brightseedbio.com/"
+- name: Genentech
+  url: "https://www.gene.com/scientists/our-scientists"
 
 # Short bio (displayed in user profile at end of posts)
 bio: My research interests include metabolomics, cheminformatics and quantum chemistry.
