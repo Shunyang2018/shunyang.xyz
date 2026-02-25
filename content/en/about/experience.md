@@ -29,15 +29,21 @@ experience:
     location: South San Francisco
     date_start: '2025-03-10'
     date_end: ''
-    description: Automation for Drug Discovery
+    description: |2-
+        * Machine learning and computational chemistry for drug discovery
+        * Developing automation pipelines for molecular property prediction
+        * Leveraging quantum chemistry and cheminformatics to accelerate lead optimization
   - title: Scientist
     company: Brightseed
     company_url: 'https://www.brightseedbio.com/'
     company_logo: BSD
     location: South San Francisco
     date_start: '2023-02-01'
-    date_end: '2025-03-14'
-    description: Computational Metabolomics Scientist
+    date_end: '2025-03-09'
+    description: |2-
+        * Computational metabolomics and data science for bioactive compound discovery
+        * Development of retention time prediction models using graph neural networks
+        * Annotation and curation of large-scale mass spectrometry databases
 
   - title: PhD Internship
     company: Brightseed
