@@ -43,25 +43,13 @@ This essay is what a slow adopter looks like when the thing finally clicks.
 
 Weekly volume, normalized to week 1 (laptop + cluster combined):
 
-| Week | Fold change vs W1 | Unlock |
-|---|---|---|
-| W1 | 1.0× | Baseline |
-| W2 | 5.0× | Phases ship |
-| W3 | 3.6× | 1st skills |
-| W4 | 3.5× | Memory |
-| W5 | **12.0×** | Build-out |
+![Weekly load (fold change vs W1), with the unlock that drove each week](./weekly_load.png)
 
 Each bar's label names the thing that week unlocked: a project hitting its first big phase delivery, a memory layer, a scaffolding port. The eye goes to the spike on the right — week 5 was about **12× week 1**. But the more interesting number is hidden in weeks 3 and 4: load stayed level *while requests dropped* (3,167 → 1,719). I wasn't running more turns. I was running heavier ones.
 
 **Tokens per request** kept rising throughout:
 
-| Week | Tokens per request (K) |
-|---|---|
-| W1 | 86 |
-| W2 | 153 |
-| W3 | 121 |
-| W4 | 211 |
-| W5 | 216 |
+![Tokens per request — content per call kept rising](./tokens_per_request.png)
 
 86K → 216K is a 2.5× fold change in payload per call. Output tokens per call grew 1.5× over the same window (512 → 778). Same chemist, denser sessions.
 
@@ -124,16 +112,7 @@ In the order I learned them. Not all of them stuck the first time.
 | Permissions | 91 shell + 17 file-access + 11 deny | cluster scheduler patterns; deny list for 8 sibling user directories |
 | Patterns documented | 36 | from "Agent vs Pipeline" (#1) to "Memory→skill promotion" (#36) |
 
-**Active project count over the 6 weeks:**
-
-| Date | Active projects |
-|---|---|
-| Apr 20 | 2 |
-| Apr 27 | 3 |
-| May 4 | 5 |
-| May 11 | 8 |
-| May 18 | 12 |
-| May 24 | 12 |
+![Active project count over the 6 weeks](./active_projects.png)
 
 The portfolio plateaued at 12 once the infrastructure stopped being the bottleneck. Growth now is depth-per-project — one of the agents going Phase 1 → 6b in three days is what depth growth looks like when the spine is in place.
 
