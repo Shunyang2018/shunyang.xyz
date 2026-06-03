@@ -17,21 +17,19 @@ links:
 > *Six weeks, eleven lessons, in numbers.*
 > *I'm a slow adopter. This is what catching up looks like.*
 
-*~1,500 words · 7 min read*
-
 ---
 
 ## Where I started
 
-I'm an analytical chemist at a pharma. Mass-spec, retention time, cheminformatics. I write code, but I'm slow to pick up new tools. Always have been.
+I'm an analytical chemist at a pharma. I write code, but I'm slow to pick up new tools. Always have been.
 
-The honest timeline:
+The timeline:
 
-- **GPT era (late 2022 to mid 2023).** I thought it was an ads event. Overpresented, underdelivering. 
-- **Mid 2023.** Tried coding. Copy-paste from chat to IDE, paste back, ran it. Treated it like a slightly faster Stack Overflow.
-- **Through 2025.** Started reviewing what it wrote, line by line. Caught some things, missed others. Trust grew slowly.
-- **Mid 2024 / early 2025.** Started using LLMs for information search instead of Google. The switch was about a year behind when I should have made it.
-- **Spring 2026 (now).** Letting an agent take over most of the code-writing for a dozen active projects. Reviewing diffs, not lines. Weekly load grew about 12× in five weeks.
+- **GPT era (late 2022 – mid 2023):** I thought it was an ads event. Overpresented, underdelivering.
+- **Mid 2023:** Tried coding with it. Copy-paste from chat to IDE, paste back, ran it. Treated it like a slightly faster Stack Overflow.
+- **Through 2025:** Started reviewing what it wrote, line by line. Caught some things, missed others. Trust grew slowly.
+- **Mid 2024 – early 2025:** Started using LLMs for information search instead of Google. The switch was about a year behind when I should have made it.
+- **Spring 2026 (now):** Letting an agent take over most of the code-writing for a dozen active projects. Reviewing diffs, not lines. Weekly load grew about 12× in five weeks.
 
 The same lag shows up in adjacent topics. RLHF — colleagues started about a year ago. I'm only now deciding to actually work on it. I'll be late to that one too, and I'll try to close the gap faster than I did with agentic coding.
 
@@ -45,72 +43,102 @@ Weekly volume, normalized to week 1 (laptop + cluster combined):
 
 ![Weekly load (fold change vs W1), with the unlock that drove each week](./weekly_load.png)
 
-Each bar's label names the thing that week unlocked: a project hitting its first big phase delivery, a memory layer, a scaffolding port. The eye goes to the spike on the right — week 5 was about **12× week 1**. But the more interesting number is hidden in weeks 3 and 4: load stayed level *while requests dropped* (3,167 → 1,719). I wasn't running more turns. I was running heavier ones.
-
-**Tokens per request** kept rising throughout:
+The eye goes to the spike on the right — week 5 was about **12× week 1**. But the more interesting number is hidden in weeks 3 and 4: load stayed level *while requests dropped* (3,167 → 1,719). I wasn't running more turns. I was running heavier ones.
 
 ![Tokens per request — content per call kept rising](./tokens_per_request.png)
 
-86K → 216K is a 2.5× fold change in payload per call. Output tokens per call grew 1.5× over the same window (512 → 778). Same chemist, denser sessions.
+86K → 216K is a **2.5× fold change** in payload per call. Output tokens per call grew 1.5× over the same window (512 → 778). Same chemist, denser sessions.
 
 ---
 
 ## Six weeks, six unlocks
 
-| Week | Tokens | Requests | What unlocked |
-|---|---|---|---|
-| W1 (Apr 20–26) | 186M | 2,164 | First cluster sessions; baseline ML projects on the bench |
-| W2 (Apr 27 – May 3) | 544M | 3,551 | One generative project shipped Phases 1–3; first sustained heavier sessions |
-| W3 (May 4–10) | 382M | 3,167 | First two skills (one for experiment runs, one for cluster submission); a new spectral-mining project started |
-| W4 (May 11–17) | 362M | 1,719 | Memory layer matured (eight feedback memories accumulated); ~8 projects in flight |
-| W5 (May 18–24) | **1,762M** | **8,168** | 4 new projects in 4 days; a tool-augmented agent shipped Phase 1 → 6b in 3 days; agentic scaffolding ported in from a reference codebase; first skill promotions |
+**W1** — 186M tokens · 2,164 requests
+First cluster sessions; baseline ML projects on the bench.
 
-Each row added something the next row built on. None of it was strategic. Each piece came from a specific friction in the prior week that I got tired of.
+**W2** — 544M tokens · 3,551 requests
+One project shipped Phases 1–3. First sustained heavy sessions.
+
+**W3** — 382M tokens · 3,167 requests
+First two skills (experiment runs, cluster submission). A new data-mining project started.
+
+**W4** — 362M tokens · 1,719 requests
+Memory layer matured (8 feedback memories accumulated). ~8 projects in flight.
+
+**W5** — **1,762M tokens** · **8,168 requests**
+4 new projects in 4 days. A tool-augmented agent shipped Phase 1→6b in 3 days. Agentic scaffolding ported from a reference codebase. First skill promotions.
+
+Each week added something the next week built on. None of it was strategic — each piece came from a specific friction in the prior week that I got tired of.
 
 ---
 
 ## What changed
 
-In the order I learned them. Not all of them stuck the first time.
+In the order I learned them. Not all stuck the first time.
 
-**1. Stop asking for permission on cluster jobs.** I was confirming every submission. Memory rule that says *don't ask, just submit and report* dropped loop time from minutes to seconds. The "are you sure?" prompts were ~30 seconds × dozens of times per session of pure friction.
+### 1. Stop asking for permission on cluster jobs
 
-**2. Build infrastructure before features.** Weeks 1–2 were 80% project work. By week 5 it was the inverse — and that's when output went up. Hooks, memories, skills, scaffolding compound. New projects start at week-5 productivity.
+I was confirming every submission. A memory rule that says *don't ask, just submit and report* dropped loop time from minutes to seconds. The "are you sure?" prompts were ~30 seconds × dozens of times per session of pure friction.
 
-**3. Solve permissions once.** Every "do you want to run this?" is friction. The project's permissions config ended up with **91 shell allowlist entries** and **17 file-access entries**. Plus a deny list covering 8 sibling user directories so I can't edit colleagues' code by accident. Most operations now run without a prompt.
+### 2. Build infrastructure before features
 
-**4. Solve the boring plumbing.** Set up the cluster submission path so a sandboxed compute environment could submit jobs without a shared filesystem. Remote VS Code pointed at GPU nodes. Job logs streamed back to my laptop without manual `rsync`. Each one removes ~5 minutes of friction × dozens of times per day.
+Weeks 1–2 were 80% project work. By week 5 it was the inverse — and that's when output went up. Hooks, memories, skills, scaffolding compound. New projects start at week-5 productivity.
 
-**5. Ask the agent to ask me questions.** *"Ask me three clarifying questions before you start."* Highest-impact line I added to my prompts. Half the time the questions made me realize I didn't know what I wanted.
+### 3. Solve permissions once
 
-**6. Plan before execute.** Plan mode. Reviewable artifact before any code is written. Saves the revert-and-retry cycle.
+Every "do you want to run this?" is friction. The project's permissions config ended up with **91 shell allowlist entries** and **17 file-access entries**. Plus a deny list covering 8 sibling user directories so I can't edit colleagues' code by accident. Most operations now run without a prompt.
 
-**7. Write memories with reasoning, not just rules.** Every memory file has a `Why:` line and a `How to apply:` line. The agent learns the rule's *boundary*, not just the rule. Memories that say "do X" without saying why decay; memories that say "do X *because* Y last quarter" survive.
+### 4. Solve the boring plumbing
 
-**8. Promote memories to skills when they keep firing.** A "resume the partial job, don't re-run from scratch" memory became a `/resume-job` invocable skill after the same procedure ran three times. Memory layer compounds *through promotion* — not just by accumulation.
+Set up the cluster submission path so a sandboxed compute environment could submit jobs without a shared filesystem. Remote VS Code pointed at GPU nodes. Job logs streamed back to my laptop without manual `rsync`. Each one removes ~5 minutes of friction × dozens of times per day.
 
-**9. Let projects talk.** A confidence-calibration project consumes entropy tools written in a metabolite-ID project. A diagnostic-ion mining project will feed peak priors back into the metabolite-ID agent. The portfolio isn't 12 independent projects — it's a graph. Each project's outputs become another's priors.
+### 5. Ask the agent to ask me questions
 
-**10. Multiagent for parallel branches.** Background subagents for independent tasks (search this repo / draft this analysis / find this dataset). Subagent context shields the main session from large outputs. Three branches in flight without context contamination.
+> *"Ask me three clarifying questions before you start."*
 
+Highest-impact line I added to my prompts. Half the time the questions made me realize I didn't know what I wanted.
 
-### Things I didn't aim for but happened anyway
+### 6. Plan before execute
+
+Plan mode. Reviewable artifact before any code is written. Saves the revert-and-retry cycle.
+
+### 7. Write memories with reasoning, not just rules
+
+Every memory file has a `Why:` line and a `How to apply:` line. The agent learns the rule's *boundary*, not just the rule. Memories that say "do X" without saying why decay; memories that say "do X *because* Y last quarter" survive.
+
+### 8. Promote memories to skills when they keep firing
+
+A "resume the partial job, don't re-run from scratch" memory became a `/resume-job` invocable skill after the same procedure ran three times. Memory layer compounds *through promotion* — not just by accumulation.
+
+### 9. Let projects talk
+
+One project consumes utility tools written in another. A third will feed its outputs back as priors into the first. The portfolio isn't 12 independent projects — it's a graph. Each project's outputs become another's inputs.
+
+### 10. Multiagent for parallel branches
+
+Background subagents for independent tasks (search this repo / draft this analysis / find this dataset). Subagent context shields the main session from large outputs. Three branches in flight without context contamination.
+
+---
+
+## Unexpected side effects
 
 - **Negative results published in the repo.** A full fine-tune on a published embedding model lost to a simpler baseline. Logged as `Exp X.YZ NEGATIVE`, linked from the project's manuscript. Failed runs that get *committed* become next quarter's prior, not buried compute.
+
 - **Pre-commit quality gates.** A hook that blocks `git commit` when staged changes touch numerical logic, until I articulate the math in the commit body. Came after I caught the agent producing markdown with *estimated* numbers that the actual data later contradicted by 50–100% per day. Wrong numbers don't fail tests; they just ship. Now they fail commits instead.
+
 - **Tracking my own learning.** This essay exists. Tracking it makes the meta-improvements visible — like load-per-call rising while request count fell. Only see it if you look.
 
 ---
 
-## Infrastructure inventory (May 25, 2026)
+## Infrastructure inventory
 
-| Layer | Count | Examples (generic) |
-|---|---|---|
-| Memory files | 25 | autonomous-mode rules, cluster-resource defaults, scoring-API references, "stop means stop" |
-| Skills | 6 | a metabolite-elucidation reasoning skill, a cluster-submit skill, an experiment-run skill, a figure-review skill, a resume-job skill, a PR-description skill |
-| Hooks | 3 | PreToolUse numerical-review (blocks commits with un-articulated numerical changes); PostToolUse cluster-job-ID capture; Stop ruff lint |
-| Permissions | 91 shell + 17 file-access + 11 deny | cluster scheduler patterns; deny list for 8 sibling user directories |
-| Patterns documented | 36 | from "Agent vs Pipeline" (#1) to "Memory→skill promotion" (#36) |
+*As of May 2026:*
+
+- **25 memory files** — autonomous-mode rules, cluster-resource defaults, scoring-API references
+- **6 skills** — domain-specific reasoning, cluster-submit, experiment-run, figure-review, resume-job, PR-description
+- **3 hooks** — numerical-review gate, cluster-job-ID capture, ruff lint
+- **119 permission entries** — 91 shell allowlist, 17 file-access, 11 deny rules
+- **36 documented patterns** — from "Agent vs Pipeline" (#1) to "Memory→skill promotion" (#36)
 
 ![Active project count over the 6 weeks](./active_projects.png)
 
@@ -118,7 +146,7 @@ The portfolio plateaued at 12 once the infrastructure stopped being the bottlene
 
 ---
 
-## Things from a chemistry training
+## Analogies from chemistry
 
 **Reaction rate isn't throughput.** More turns per hour doesn't help if half are clarifying questions. Spec quality is the rate-limiting step. So I ask the agent to ask me questions instead of letting it guess.
 
@@ -128,9 +156,7 @@ The portfolio plateaued at 12 once the infrastructure stopped being the bottlene
 
 ## For a chemist starting today
 
-The minimum, ordered:
-
-1. One project. One CLAUDE.md. One AGENTS.md. Don't scaffold for 12 on day one.
+1. One project. One `CLAUDE.md`. One `AGENTS.md`. Don't scaffold for 12 on day one.
 2. Wait until you've corrected the agent on the same thing three times before writing the first memory. Earlier than that and the rules don't generalize.
 3. Solve permissions early. Twenty allowlist entries on week one removes hundreds of prompts on week three.
 4. Tell the agent to ask you clarifying questions when you're vague.
@@ -139,8 +165,8 @@ The minimum, ordered:
 
 ---
 
-## What I'm doing next
+## What's next
 
-Now I have enough token usage. The next gap to close is RL. I first time heard RLHF about eight months ago. I'm picking it up now — late, again. The hope is that the muscle for closing this kind of gap is itself getting faster: Agentic coding took me ~12 months from "interesting" to "I rely on it daily," RL might take 3–4. We'll see.
+The next gap to close is RL. I first heard RLHF about eight months ago. I'm picking it up now — late, again. The hope is that the muscle for closing this kind of gap is itself getting faster: agentic coding took me ~12 months from "interesting" to "I rely on it daily"; RL might take 3–4. We'll see.
 
 The thing that gets faster isn't the adoption itself. It's the time between *seeing other people do it* and *deciding to actually try it*.
