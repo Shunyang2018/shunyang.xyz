@@ -74,17 +74,20 @@ features:
     gravatar: false
     shape: circle
   comment:
-    provider: ''
+    provider: giscus
     disqus:
       shortname: ''
       show_count: true
     commento:
       url: ''
     giscus:
-      repo: ''
-      repo_id: ''
-      category: ''
-      category_id: ''
+      repo: 'Shunyang2018/shunyang.xyz'
+      repo_id: 'R_kgDOI4or7w'
+      category: 'General'
+      category_id: 'DIC_kwDOI4or784C-c_W'
+      mapping: pathname
+      theme: preferred_color_scheme
+      language_code: en
   search:
     provider: wowchemy
     algolia:

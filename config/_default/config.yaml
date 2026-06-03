@@ -19,6 +19,13 @@ cascade:
     commentable: true
     show_related: true
     show_breadcrumb: true
+  - _target:
+      path: en/posts/**
+    editable: true
+    reading_time: true
+    commentable: true
+    show_related: true
+    show_breadcrumb: true
 
 ############################
 ## LANGUAGE
