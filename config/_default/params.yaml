@@ -73,6 +73,10 @@ features:
   avatar:
     gravatar: false
     shape: circle
+  public_stats:
+    enable: true
+    # Optional: paste a public Looker Studio embed URL (File → Embed report) to show a world map / extra charts.
+    looker_embed_url: ''
   comment:
     provider: giscus
     disqus:

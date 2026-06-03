@@ -1,9 +1,17 @@
 # IDEs
 .idea/
+.cursor/
+.claude/settings.local.json
+
+# Node (Netlify analytics function)
+node_modules/
 
 # Hugo
 resources/
 public/
 assets/jsconfig.json
+
+# macOS
 .DS_Store
 content/.DS_Store
+content/en/.DS_Store
