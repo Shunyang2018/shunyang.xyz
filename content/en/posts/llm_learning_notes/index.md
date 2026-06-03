@@ -1,6 +1,7 @@
 ---
 title: "A Chemist's Notes on Agentic Coding using Claude"
 summary: Six weeks of adopting agentic coding as a computational chemist — from skeptic to 12× weekly output, with numbers, unlocks, and lessons for scientists starting today.
+commentable: true
 tags:
   - LLM
   - Agentic Coding

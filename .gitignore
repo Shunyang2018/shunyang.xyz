@@ -3,7 +3,7 @@
 .cursor/
 .claude/settings.local.json
 
-# Node (Netlify analytics function)
+# Node
 node_modules/
 
 # Hugo

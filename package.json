@@ -1,7 +1,0 @@
-{
-  "name": "shunyang.xyz",
-  "private": true,
-  "dependencies": {
-    "@google-analytics/data": "^4.12.0"
-  }
-}

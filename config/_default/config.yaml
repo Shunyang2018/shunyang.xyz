@@ -11,16 +11,16 @@ baseURL: 'https://shunyangwang.netlify.app/' # Website URL
 ############################
 
 cascade:
-  # Blog post options
+  # Blog post options (paths match content/en/posts/ → logical path posts/**)
   - _target:
-      path: /post/**
+      path: posts/**
     editable: true
     reading_time: true
     commentable: true
     show_related: true
     show_breadcrumb: true
   - _target:
-      path: en/posts/**
+      path: /post/**
     editable: true
     reading_time: true
     commentable: true
