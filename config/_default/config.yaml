@@ -61,6 +61,7 @@ permalinks:
   authors: '/author/:slug/'
   tags: '/tag/:slug/'
   categories: '/category/:slug/'
+  series: '/series/:slug/'
 disableAliases: true
 outputs:
   home: [HTML, RSS, JSON, WebAppManifest, headers, redirects]
@@ -73,6 +74,7 @@ timeout: 600000
 taxonomies:
   tag: tags
   category: categories
+  series: series
   author: authors
 markup:
   _merge: deep
@@ -85,6 +87,8 @@ related:
       weight: 100
     - name: categories
       weight: 70
+    - name: series
+      weight: 90
 security:
   _merge: deep
 sitemap:

@@ -59,4 +59,16 @@
   </span>
   {{ end }}
 
+  {{ $seriesTaxonomy := "series" }}
+  {{ if $page.Param $seriesTaxonomy }}
+  <span class="middot-divider"></span>
+  <span class="article-series">
+    <i class="fas fa-layer-group mr-1"></i>
+    {{- range $index, $value := ($page.GetTerms $seriesTaxonomy) -}}
+      {{- if gt $index 0 }}, {{ end -}}
+      <a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a>
+    {{- end -}}
+  </span>
+  {{ end }}
+
 </div>

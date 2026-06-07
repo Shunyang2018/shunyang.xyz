@@ -11,6 +11,10 @@ resources/
 public/
 assets/jsconfig.json
 
+# Private writing drafts (local only; never commit)
+private-drafts/
+content/en/posts/automating-the-last-mile-in-the-lab/draft.md
+
 # macOS
 .DS_Store
 content/.DS_Store
