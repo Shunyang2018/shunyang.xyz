@@ -1,6 +1,6 @@
 ---
 title: How to Automate the Last Mile in the Lab
-summary: How small integrations and reliable handoffs can turn isolated laboratory tools into an automation workflow scientists actually use.
+summary: Lessons from finding real laboratory bottlenecks, working closely with scientists, and automating toward the big picture in small steps.
 date: 2026-06-07
 draft: false
 commentable: true
