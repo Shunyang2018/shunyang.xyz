@@ -25,3 +25,9 @@ design:
   columns: '1'
 
 ---
+
+<nav class="post-topic-bar" aria-label="Post topics">
+  <a href="/posts/">All Posts</a>
+  <a href="/series/lab-automation-learnings/">Lab Automation</a>
+  <a href="/series/ai-and-coding-learnings/">AI &amp; Coding</a>
+</nav>
