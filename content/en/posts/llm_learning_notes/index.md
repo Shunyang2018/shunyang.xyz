@@ -1,10 +1,15 @@
 ---
-title: "A Chemist's Notes on Agentic Coding using Claude"
-summary: Six weeks of adopting agentic coding as a computational chemist — from skeptic to 12× weekly output, with numbers, unlocks, and lessons for scientists starting today.
+title: "Six Weeks with Claude Code: A Computational Chemist's Notes"
+summary: What changed during my first six weeks using Claude Code for scientific work, as my weekly usage grew about 12× and I changed how I planned, reviewed, and ran projects.
 commentable: true
+categories:
+  - AI and Coding
+series:
+  - AI and Coding Learnings
 tags:
   - LLM
   - Agentic Coding
+  - Claude Code
 date: 2026-05-25
 external_link: ''
 url_pdf: ''
@@ -15,14 +20,14 @@ links:
     url: ''
 ---
 
-> *Six weeks of token usage, in numbers.*
+> *Six weeks of using Claude Code, in numbers.*
 > *I'm a slow adopter. This is what catching up looks like.*
 
 ---
 
 ## Where I started
 
-I'm a computational chemist at a pharma. I write code, but I'm slow to pick up new tools. This time I want that to change.
+I'm a computational chemist at a pharma. I write code, but I'm slow to pick up new tools. Over six weeks, I started using Claude Code for real scientific projects and changed how I work with code every day.
 
 The timeline:
 
@@ -30,9 +35,9 @@ The timeline:
 - **Mid 2023:** Tried coding with it. Copy-paste from chat to IDE, paste back, ran it. Treated it like a slightly faster Stack Overflow.
 - **Mid 2024 – early 2025:** Started using LLMs for information search instead of Google. The switch was about a year behind when I should have made it.
 - **Through 2025:** Started reviewing what it wrote, line by line. Caught some things, missed others. Trust grew slowly.
-- **Spring 2026 (now):** Letting an agent take over most of the code-writing for a dozen active projects. Reviewing diffs, not lines. Weekly load grew about 12× in five weeks.
+- **Spring 2026 (now):** Letting Claude Code take over most of the code-writing for a dozen active projects. Reviewing diffs, not lines. Weekly load grew about 12× in five weeks.
 
-This essay is what a slow adopter looks like when the thing finally clicks.
+This essay is what a slow adopter looks like when Claude Code finally clicks.
 
 ---
 
@@ -40,7 +45,7 @@ This essay is what a slow adopter looks like when the thing finally clicks.
 
 It is obviously wrong to optimize for maximum tokens, but as a beginner I realized token use is a decent proxy for how familiar I am with the tool.
 
-More tokens per task usually means fewer back-and-forth turns, more self-evaluation, and more iteration. It pushed me to think about better harnessing and how to interact with the agent like a code reviewer.
+More tokens per task usually means fewer back-and-forth turns, more self-evaluation, and more iteration. It pushed me to think about better harnessing and how to interact with Claude Code like a code reviewer.
 
 Through this journey, I learned how to set up tools, skills, and memories.
 
@@ -58,7 +63,7 @@ The eye goes to the spike on the right — week 5 was about **12× week 1**. But
 
 86K → 216K is a **2.5× fold change** in payload per call. Output tokens per call grew 1.5× over the same window (512 → 778). Much denser sessions.
 
-What's more, I slowly moved all work from my laptop to the cluster — long-running sessions under tmux or Zellij, with a sandbox where the agent could run autonomously without me re-approving every command.
+What's more, I slowly moved all work from my laptop to the cluster — long-running Claude Code sessions under tmux or Zellij, with a sandbox where it could run autonomously without me re-approving every command.
 
 ---
 
@@ -66,7 +71,7 @@ What's more, I slowly moved all work from my laptop to the cluster — long-runn
 
 **W1** — 186M tokens · 2,164 requests
 
-First cluster sessions. First three skill templates landed: experiment runs, cluster submission, PR descriptions. Earliest memory rules: file scope (don't touch other users' code), review-figures-before-commit. The unlock was vocabulary — naming the rules the agent would follow.
+First Claude Code sessions on the cluster. First three skill templates landed: experiment runs, cluster submission, PR descriptions. Earliest memory rules: file scope (don't touch other users' code), review-figures-before-commit. The unlock was vocabulary — naming the rules Claude Code would follow.
 
 **W2** — 544M tokens · 3,551 requests
 
@@ -102,17 +107,17 @@ Weeks 1–2 were 80% project work. By week 5 it was the inverse — and that's w
 
 ### 2. Solve permissions once
 
-Every "do you want to run this?" is friction. The project's permissions config ended up with **91 shell allowlist entries** and **17 file-access entries**. Plus a deny list covering 8 sibling user directories so I can't edit colleagues' code by accident. Most operations now run without a prompt. Sandbox or running in a container is a better option, but both are limited by available resources.
+Every "do you want to run this?" is friction. The project's permissions config ended up with **91 shell allowlist entries** and **17 file-access entries**. Plus a deny list covering 8 sibling user directories so I can't edit colleagues' code by accident. Most operations now run without a prompt. *Edited June 7: I now think a sandboxed auto mode is a better solution, when the available resources support it.*
 
 ### 3. Solve the boring plumbing
 
 Set up the cluster submission path so a sandboxed compute environment could submit jobs without a shared filesystem. Remote VS Code pointed at GPU nodes. Job logs streamed back to my laptop without manual `rsync`. Each one removes ~5 minutes of friction × dozens of times per day.
 
-### 4. Ask the agent to ask me questions
+### 4. Ask Claude Code to ask me questions
 
 > *"Ask me three clarifying questions before you start."*
 
-Highest-impact line I added to my prompts. Half the time the questions made me realize I didn't know what I wanted.
+This was the highest-impact line I added to my Claude Code prompts. Half the time the questions made me realize I didn't know what I wanted.
 
 ### 5. Plan before execute
 
@@ -120,7 +125,7 @@ Plan mode. Reviewable artifact before any code is written. Saves the revert-and-
 
 ### 6. Write memories with reasoning, not just rules
 
-Every memory file has a `Why:` line and a `How to apply:` line. The agent learns the rule's *boundary*, not just the rule. Memories that say "do X" without saying why decay; memories that say "do X *because* Y last quarter" survive.
+Every memory file has a `Why:` line and a `How to apply:` line. Claude Code learns the rule's *boundary*, not just the rule. Memories that say "do X" without saying why decay; memories that say "do X *because* Y last quarter" survive.
 
 ### 7. Promote memories to skills when they keep firing
 
@@ -140,7 +145,7 @@ Background subagents for independent tasks (search this repo / draft this analys
 
 - **Negative results published in the repo.** A full fine-tune on a published embedding model lost to a simpler baseline. Logged as `Exp X.YZ NEGATIVE`, linked from the project's manuscript. Failed runs that get *committed* become next quarter's prior, not buried compute.
 
-- **Pre-commit quality gates.** A hook that blocks `git commit` when staged changes touch numerical logic, until I articulate the math in the commit body. Came after I caught the agent producing markdown with *estimated* numbers that the actual data later contradicted by 50–100% per day. Wrong numbers don't fail tests; they just ship. Now they fail commits instead.
+- **Pre-commit quality gates.** A hook that blocks `git commit` when staged changes touch numerical logic, until I articulate the math in the commit body. Came after I caught Claude Code producing markdown with *estimated* numbers that the actual data later contradicted by 50–100% per day. Wrong numbers don't fail tests; they just ship. Now they fail commits instead.
 
 - **Tracking my own learning.** This essay exists. Tracking it makes the meta-improvements visible — like load-per-call rising while request count fell. Only see it if you look.
 
@@ -153,18 +158,17 @@ Background subagents for independent tasks (search this repo / draft this analys
 - **25 memory files** — autonomous-mode rules, cluster-resource defaults, scoring-API references
 - **6 skills** — domain-specific reasoning, cluster-submit, experiment-run, figure-review, resume-job, PR-description
 - **3 hooks** — numerical-review gate, cluster-job-ID capture, ruff lint
-- **119 permission entries** — 91 shell allowlist, 17 file-access, 11 deny rules (maybe there are smarter ways?)
 - **36 documented patterns** — from "Agent vs Pipeline" (#1) to "Memory→skill promotion" (#36)
 
 ![Active project count over the 6 weeks](./active_projects.png)
 
-The portfolio plateaued at 12 once the infrastructure stopped being the bottleneck. Growth now is depth-per-project — one of the agents going Phase 1 → 6b in three days is what depth growth looks like when the spine is in place.
+The portfolio plateaued at 12 once the infrastructure stopped being the bottleneck. Growth now is depth-per-project — one Claude Code project going from Phase 1 → 6b in three days is what depth growth looks like when the spine is in place.
 
 ---
 
 ## Analogies from chemistry
 
-**Reaction rate isn't throughput.** More turns per hour doesn't help if half are clarifying questions. Spec quality is the rate-limiting step. So I ask the agent to ask me questions instead of letting it guess.
+**Reaction rate isn't throughput.** More turns per hour doesn't help if half are clarifying questions. Spec quality is the rate-limiting step. So I ask Claude Code to ask me questions instead of letting it guess.
 
 **Catalysts beat reagents.** A small piece of well-placed infrastructure accelerates everything downstream. A hook that blocks numerical commits costs nothing and prevents an entire failure mode.
 
@@ -172,10 +176,10 @@ The portfolio plateaued at 12 once the infrastructure stopped being the bottlene
 
 ## For a chemist starting today
 
-1. One project. One `CLAUDE.md`. One `AGENTS.md`. Don't scaffold for 12 on day one.
-2. Wait until you've corrected the agent on the same thing three times before writing the first memory. Earlier than that and the rules don't generalize.
+1. One project. One `CLAUDE.md`. Don't scaffold for 12 on day one.
+2. Wait until you've corrected Claude Code on the same thing three times before writing the first memory. Earlier than that and the rules don't generalize.
 3. Solve permissions early. Twenty allowlist entries on week one removes hundreds of prompts on week three.
-4. Tell the agent to ask you clarifying questions when you're vague.
+4. Tell Claude Code to ask you clarifying questions when you're vague.
 5. Plan before execute.
 6. Track your weekly load. Mine grew 12× in five weeks; without a routine pull on usage telemetry I wouldn't have noticed.
 
