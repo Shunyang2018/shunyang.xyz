@@ -16,3 +16,6 @@ main:
   - name: Projects
     url: project/
     weight: 40
+  - name: Vibecoding
+    url: vibecoding/
+    weight: 50

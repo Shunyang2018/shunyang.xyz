@@ -5,6 +5,8 @@ commentable: true
 tags:
   - LLM
   - Agentic Coding
+series:
+  - AI and Coding Learnings
 date: 2026-05-25
 external_link: ''
 url_pdf: ''

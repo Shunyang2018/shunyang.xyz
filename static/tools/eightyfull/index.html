@@ -1229,6 +1229,13 @@
     else playBellChime();
   }
 
+  // rampage/overtime uses all three sounds together for extra urgency
+  function playAllChimes() {
+    playBellChime();
+    playSportChime();
+    playParrotChime();
+  }
+
   function vibrate() {
     if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 200]);
   }
@@ -1301,8 +1308,9 @@
   // each repeat fires sooner than the last (interval shrinks by `decay` toward `min`)
   // until acknowledged, then gives up after `maxMs` of nagging
   var NAG_PRESETS = {
-    peak:    { start: 7000, min: 1500, decay: 0.78, maxMs: 90000 },
-    rampage: { start: 4000, min: 900,  decay: 0.75, maxMs: 120000 }
+    peak:    { start: 7000, min: 1500, decay: 0.78, maxMs: 90000,  chime: playChime },
+    // rampage escalates harder and faster: lower floor, steeper decay, all sounds at once
+    rampage: { start: 3500, min: 400,  decay: 0.62, maxMs: 120000, chime: playAllChimes }
   };
   var alarmRepeatTimeoutId = null;
   var alarmNagStartTime = 0;
@@ -1319,7 +1327,7 @@
     alarmRepeatTimeoutId = setTimeout(function () {
       if (alarmAcknowledged || isPaused) return;
       if (Date.now() - alarmNagStartTime > preset.maxMs) return;
-      playChime();
+      preset.chime();
       vibrate();
       flashScreen();
       alarmCurrentInterval = Math.max(preset.min, alarmCurrentInterval * preset.decay);
@@ -1386,7 +1394,7 @@
     mascot.classList.add("alert-bounce");
     sparkleBurst();
     setStatus("🔥 Rampage mode — still going?", "🔥 狂暴模式 —— 还在吃？", true);
-    playChime();
+    playAllChimes();
     vibrate();
     flashScreen();
     notifyIfHidden();
