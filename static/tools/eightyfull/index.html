@@ -1,0 +1,1531 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<title>EightyFull 八分饱</title>
+<meta name="description" content="A meal timer that alerts you near 80% full at an unpredictable moment, so you can't anticipate it." />
+<style>
+  :root {
+    color-scheme: light;
+    --page:           #f9f9f7;
+    --surface-1:      #fcfcfb;
+    --text-primary:   #0b0b0b;
+    --text-secondary: #52514e;
+    --muted:          #898781;
+    --series-1:       #2a78d6;
+    --series-1-soft:  rgba(42, 120, 214, 0.16);
+    --gridline:       #e1e0d9;
+    --baseline:       #c3c2b7;
+    --border:         rgba(11,11,11,0.10);
+    --good:           #0ca30c;
+    --good-soft:      rgba(12, 163, 12, 0.18);
+    --track:          #e1e0d9;
+    --rampage:        #e0451c;
+    --rampage-soft:   rgba(224, 69, 28, 0.35);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      color-scheme: dark;
+      --page:           #0d0d0d;
+      --surface-1:      #1a1a19;
+      --text-primary:   #ffffff;
+      --text-secondary: #c3c2b7;
+      --muted:          #898781;
+      --series-1:       #3987e5;
+      --series-1-soft:  rgba(57, 135, 229, 0.20);
+      --gridline:       #2c2c2a;
+      --baseline:       #383835;
+      --border:         rgba(255,255,255,0.10);
+      --good:           #0ca30c;
+      --good-soft:      rgba(12, 163, 12, 0.28);
+      --track:          #2c2c2a;
+      --rampage:        #ff6a3d;
+      --rampage-soft:   rgba(255, 106, 61, 0.35);
+    }
+  }
+
+  .lang-zh { display: none; }
+  body.show-zh .lang-en { display: none; }
+  body.show-zh .lang-zh { display: inline; }
+
+  * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--page);
+    color: var(--text-primary);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    overscroll-behavior-y: contain;
+  }
+  body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    padding: 24px 14px 48px;
+  }
+  .app {
+    width: 100%;
+    max-width: 400px;
+  }
+  header {
+    margin-bottom: 16px;
+    text-align: center;
+    position: relative;
+  }
+  .lang-bar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 8px;
+  }
+  .lang-toggle-btn {
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface-1);
+    color: var(--text-secondary);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  h1 {
+    font-size: 22px;
+    margin: 0 0 2px;
+    letter-spacing: -0.01em;
+  }
+  .sub {
+    color: var(--text-secondary);
+    font-size: 13px;
+    line-height: 1.55;
+    margin: 0;
+  }
+
+  .card {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px 18px 20px;
+    margin-top: 14px;
+  }
+
+  label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin-bottom: 2px;
+  }
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+
+  /* ---- dial ---- */
+  .dial-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 250px;
+    margin: 10px auto 4px;
+    touch-action: none;
+    user-select: none;
+  }
+  .dial-wrap svg { width: 100%; height: auto; display: block; }
+  .dial-track { fill: none; stroke: var(--track); stroke-width: 14; }
+  .dial-arc { fill: none; stroke: var(--series-1); stroke-width: 14; stroke-linecap: round; }
+  .dial-hit { fill: none; stroke: transparent; stroke-width: 46; cursor: grab; }
+  .dial-hit:active { cursor: grabbing; }
+  .dial-tick { fill: var(--muted); font-size: 11px; font-variant-numeric: tabular-nums; text-anchor: middle; dominant-baseline: middle; }
+  .dial-handle { fill: var(--series-1); stroke: var(--surface-1); stroke-width: 3; pointer-events: none; }
+  .dial-peak { fill: var(--surface-1); stroke: var(--good); stroke-width: 3; pointer-events: none; }
+
+  .dial-readout {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .dial-readout .steppers { pointer-events: auto; display: flex; align-items: center; gap: 14px; }
+  .dial-minutes {
+    font-size: 42px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+  .dial-minutes-label {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 2px;
+    text-align: center;
+  }
+  .step-btn {
+    pointer-events: auto;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--page);
+    color: var(--text-primary);
+    font-size: 18px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .range-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  input[type="range"] {
+    width: 100%;
+    accent-color: var(--good);
+    flex: 1;
+  }
+  .range-value {
+    min-width: 40px;
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    font-size: 14px;
+  }
+  .hint {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 6px;
+  }
+
+  /* ---- distribution shape switch ---- */
+  .switch-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .switch-row-label { font-size: 13px; color: var(--text-primary); }
+  .switch { position: relative; display: inline-block; width: 44px; height: 26px; flex-shrink: 0; }
+  .switch input { opacity: 0; width: 0; height: 0; position: absolute; }
+  .switch-slider {
+    position: absolute; inset: 0;
+    background: var(--track);
+    border-radius: 999px;
+    transition: .2s;
+    cursor: pointer;
+  }
+  .switch-slider::before {
+    content: "";
+    position: absolute;
+    height: 20px; width: 20px;
+    left: 3px; top: 3px;
+    background: #ffffff;
+    border-radius: 50%;
+    transition: .2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,.35);
+  }
+  .switch input:checked + .switch-slider { background: var(--series-1); }
+  .switch input:checked + .switch-slider::before { transform: translateX(18px); }
+
+  .chart-wrap {
+    margin-top: 12px;
+    touch-action: none;
+    user-select: none;
+    cursor: pointer;
+  }
+  svg.chart { width: 100%; height: auto; display: block; }
+  .chart-area { fill: var(--series-1-soft); }
+  .chart-line { fill: none; stroke: var(--series-1); stroke-width: 2; }
+  .chart-baseline { stroke: var(--baseline); stroke-width: 1; }
+  .chart-peak-line { stroke: var(--good); stroke-width: 1; stroke-dasharray: 3 3; }
+  .chart-label { fill: var(--muted); font-size: 10px; }
+
+  button {
+    font: inherit;
+    cursor: pointer;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    padding: 14px 16px;
+    font-size: 15px;
+    font-weight: 600;
+  }
+  .btn-primary {
+    width: 100%;
+    background: var(--series-1);
+    color: #ffffff;
+    border: none;
+    margin-top: 16px;
+  }
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+  }
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+  }
+  .btn-row button { flex: 1; }
+  .btn-ghost {
+    width: 100%;
+    background: transparent;
+    color: var(--text-secondary);
+    border: none;
+    font-weight: 500;
+    font-size: 13px;
+    margin-top: 8px;
+    padding: 8px;
+  }
+
+  .sound-style-row {
+    display: flex;
+    gap: 8px;
+  }
+  .style-btn {
+    flex: 1;
+    min-width: 0;
+    background: var(--page);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 10px 4px;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .style-btn.active {
+    background: var(--series-1-soft);
+    border-color: var(--series-1);
+    color: var(--text-primary);
+  }
+
+  .checkbox-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .checkbox-row input { margin-top: 3px; accent-color: var(--series-1); }
+  .checkbox-row span { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+  /* ---- running view ---- */
+  #runView { display: none; }
+  .timer { text-align: center; }
+  .status {
+    font-size: 14px;
+    color: var(--text-secondary);
+    min-height: 20px;
+    margin-bottom: 4px;
+  }
+  .status.alert { color: var(--good); font-weight: 700; }
+  body.rampage .status.alert { color: var(--rampage); }
+
+  .ring-wrap {
+    position: relative;
+    width: 100%;
+    max-width: 230px;
+    margin: 8px auto 4px;
+  }
+  body.rampage .ring-wrap { animation: glowPulse 1s ease-in-out infinite; }
+  @keyframes glowPulse {
+    0%, 100% { filter: drop-shadow(0 0 0 rgba(0,0,0,0)); }
+    50% { filter: drop-shadow(0 0 12px var(--rampage-soft)); }
+  }
+  .ring-wrap svg { width: 100%; height: auto; display: block; }
+  .run-track { fill: none; stroke: var(--track); stroke-width: 12; }
+  .run-arc { fill: none; stroke: var(--series-1); stroke-width: 12; stroke-linecap: round; transition: stroke 0.3s ease; }
+  .run-arc.done { stroke: var(--good); }
+  .run-arc.rampage-ring { stroke: var(--rampage); animation: ringPulse 0.8s ease-in-out infinite; }
+  @keyframes ringPulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+  .ring-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  .mascot-box { position: relative; width: 92px; height: 92px; display: flex; align-items: center; justify-content: center; }
+  .mascot {
+    position: relative;
+    width: 54px;
+    height: 54px;
+    display: inline-block;
+    animation: breathe 2.6s ease-in-out infinite;
+    transform-origin: 50% 65%;
+  }
+  @keyframes breathe {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.07) rotate(-1deg); }
+  }
+  .mascot.alert-bounce {
+    animation: bounceWiggle 0.55s ease-in-out 3;
+  }
+  @keyframes bounceWiggle {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    25% { transform: translateY(-10px) rotate(-10deg); }
+    50% { transform: translateY(0) rotate(8deg); }
+    75% { transform: translateY(-6px) rotate(-5deg); }
+  }
+  .mascot-face {
+    position: absolute;
+    inset: 0;
+    font-size: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .face-a { animation: chewA 0.9s steps(1, end) infinite; }
+  .face-b { animation: chewB 0.9s steps(1, end) infinite; }
+  @keyframes chewA { 0%, 49% { opacity: 1; } 50%, 100% { opacity: 0; } }
+  @keyframes chewB { 0%, 49% { opacity: 0; } 50%, 100% { opacity: 1; } }
+  .eat-bowl {
+    position: absolute;
+    right: -8px;
+    bottom: -6px;
+    font-size: 22px;
+  }
+  .rampage-mascot .face-a, .rampage-mascot .face-b { animation-duration: 0.3s; }
+  .rampage-mascot .mascot { animation-duration: 0.5s; }
+
+  .orbit-ring { position: absolute; inset: 0; pointer-events: none; }
+  .orbit-food {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 15px;
+    animation: orbitSpin 1.3s linear infinite;
+  }
+  @keyframes orbitSpin {
+    from { transform: translate(-50%, -50%) rotate(var(--start-angle)) translateX(50px); }
+    to   { transform: translate(-50%, -50%) rotate(calc(var(--start-angle) + 360deg)) translateX(50px); }
+  }
+
+  .sparkle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    font-size: 15px;
+    opacity: 0;
+  }
+  .sparkle-burst .sparkle {
+    animation: sparkleFly 0.9s ease-out forwards;
+  }
+  @keyframes sparkleFly {
+    0%   { opacity: 1; transform: translate(-50%, -50%) rotate(var(--ang)) translateY(0) scale(0.5); }
+    100% { opacity: 0; transform: translate(-50%, -50%) rotate(var(--ang)) translateY(-58px) scale(1.15); }
+  }
+
+  .clock-sub {
+    font-size: 18px;
+    font-variant-numeric: tabular-nums;
+    color: var(--text-secondary);
+    margin-top: 6px;
+  }
+  body.rampage .clock-sub { color: var(--rampage); font-weight: 700; }
+
+  .rampage-flavor {
+    display: none;
+    font-size: 12.5px;
+    color: var(--rampage);
+    text-align: center;
+    margin-top: 8px;
+    font-weight: 700;
+  }
+  .rampage-flavor.show { display: block; }
+
+  /* ---- acknowledge-stop button ---- */
+  #ackBtn {
+    display: none;
+    width: 100%;
+    background: var(--good);
+    color: #ffffff;
+    border: none;
+    margin-top: 14px;
+    padding: 18px 16px;
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    box-shadow: 0 0 0 0 var(--good-soft);
+    animation: ackPulse 1.4s ease-in-out infinite;
+  }
+  body.rampage #ackBtn { background: var(--rampage); box-shadow: 0 0 0 0 var(--rampage-soft); animation: ackPulseRampage 1s ease-in-out infinite; }
+  @keyframes ackPulse {
+    0%   { box-shadow: 0 0 0 0 var(--good-soft); }
+    70%  { box-shadow: 0 0 0 14px rgba(12, 163, 12, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(12, 163, 12, 0); }
+  }
+  @keyframes ackPulseRampage {
+    0%   { box-shadow: 0 0 0 0 var(--rampage-soft); }
+    70%  { box-shadow: 0 0 0 14px rgba(224, 69, 28, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(224, 69, 28, 0); }
+  }
+  .ack-note {
+    display: none;
+    font-size: 12.5px;
+    color: var(--good);
+    text-align: center;
+    margin-top: 10px;
+    line-height: 1.5;
+  }
+  .ack-note.show { display: block; }
+
+  .flash-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background: var(--good);
+    opacity: 0;
+    z-index: 50;
+  }
+  .flash-overlay.pulse { animation: flashPulse 0.6s ease-out 2; }
+  @keyframes flashPulse {
+    0% { opacity: 0; }
+    30% { opacity: 0.3; }
+    100% { opacity: 0; }
+  }
+
+  footer {
+    margin-top: 20px;
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.6;
+    text-align: center;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .orbit-food,
+    .run-arc.rampage-ring,
+    body.rampage .ring-wrap,
+    .rampage-mascot .mascot,
+    .rampage-mascot .face-a,
+    .rampage-mascot .face-b,
+    #ackBtn {
+      animation: none !important;
+    }
+  }
+</style>
+</head>
+<body>
+<div class="flash-overlay" id="flashOverlay"></div>
+<div class="app">
+  <header>
+    <div class="lang-bar">
+      <button type="button" class="lang-toggle-btn" id="langToggle">中文</button>
+    </div>
+    <h1><span class="lang-en">EightyFull</span><span class="lang-zh">八分饱</span></h1>
+    <p class="sub">
+      <span class="lang-en">Stop before you're stuffed — the alert lands near your target at a moment you can't predict.</span>
+      <span class="lang-zh">在目标附近的一个你无法预判的时刻提醒你，而不是一个固定时间。</span>
+    </p>
+  </header>
+
+  <div id="setupView">
+    <div class="card">
+      <div class="field">
+        <label><span class="lang-en">Meal length</span><span class="lang-zh">用餐时长</span></label>
+        <div class="dial-wrap" id="dialWrap">
+          <svg viewBox="0 0 240 240">
+            <circle class="dial-track" cx="120" cy="120" r="100"></circle>
+            <circle class="dial-arc" id="dialArc" cx="120" cy="120" r="100" transform="rotate(-90 120 120)"></circle>
+            <g id="dialTicks"></g>
+            <circle class="dial-peak" id="dialPeak" r="6"></circle>
+            <circle class="dial-handle" id="dialHandle" r="12"></circle>
+            <circle class="dial-hit" id="dialHit" cx="120" cy="120" r="100"></circle>
+          </svg>
+          <div class="dial-readout">
+            <div class="steppers">
+              <button type="button" class="step-btn" id="minusBtn" aria-label="minus 1 minute">&minus;</button>
+              <div>
+                <div class="dial-minutes" id="dialMinutesText">25</div>
+                <div class="dial-minutes-label"><span class="lang-en">min</span><span class="lang-zh">分钟</span></div>
+              </div>
+              <button type="button" class="step-btn" id="plusBtn" aria-label="plus 1 minute">+</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label><span class="lang-en">Distribution shape</span><span class="lang-zh">分布形状</span></label>
+        <div class="switch-row">
+          <span class="switch-row-label"><span class="lang-en">Custom shape</span><span class="lang-zh">自定义形状</span></span>
+          <label class="switch">
+            <input type="checkbox" id="customModeToggle" />
+            <span class="switch-slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <div class="field" id="normalControls">
+        <label><span class="lang-en">Most likely stop point</span><span class="lang-zh">最可能提醒的时间点</span></label>
+        <div class="range-row">
+          <input type="range" id="peakPercent" min="1" max="99" step="1" value="80" />
+          <span class="range-value" id="peakPercentValue">80%</span>
+        </div>
+      </div>
+
+      <div class="field" id="customControls" style="display:none;">
+        <p class="hint" style="margin-top:0;">
+          <span class="lang-en">Drag on the curve below to sculpt your own shape.</span>
+          <span class="lang-zh">在下方曲线上拖动，绘制你自己的形状。</span>
+        </p>
+        <button type="button" class="btn-ghost" id="resetShapeBtn" style="margin-top:0; padding:0;">
+          <span class="lang-en">Reset to normal curve</span><span class="lang-zh">恢复正态曲线</span>
+        </button>
+      </div>
+
+      <div class="chart-wrap" id="chartWrap">
+        <svg class="chart" id="chart" viewBox="0 0 400 120" preserveAspectRatio="none"></svg>
+      </div>
+      <p class="hint">
+        <span class="lang-en" id="peakHintEn">&asymp; 24.0 min into the meal</span>
+        <span class="lang-zh" id="peakHintZh">用餐约 24.0 分钟时</span>
+        &middot;
+        <span class="lang-en">drag left/right to move it</span><span class="lang-zh">左右拖动可调整位置</span>
+      </p>
+
+      <div class="field">
+        <label><span class="lang-en">Alert sound</span><span class="lang-zh">提醒音效</span></label>
+        <div class="sound-style-row">
+          <button type="button" class="style-btn active" id="styleBellBtn" data-style="bell">🔔 <span class="lang-en">Bell</span><span class="lang-zh">铃声</span></button>
+          <button type="button" class="style-btn" id="styleSportBtn" data-style="sport">🏃 <span class="lang-en">Sport</span><span class="lang-zh">运动感</span></button>
+          <button type="button" class="style-btn" id="styleParrotBtn" data-style="parrot">🦜 <span class="lang-en">Parrot</span><span class="lang-zh">鹦鹉</span></button>
+        </div>
+        <p class="hint" style="margin-top:6px;">
+          <span class="lang-en">Tap a style to preview it.</span>
+          <span class="lang-zh">点一下即可试听。</span>
+        </p>
+      </div>
+
+      <div class="checkbox-row">
+        <input type="checkbox" id="notifyCheckbox" />
+        <span>
+          <span class="lang-en">Also try a browser notification if this tab is in the background (needs permission).</span>
+          <span class="lang-zh">若切换到其他标签页，也尝试发送浏览器通知（需要授权）。</span>
+        </span>
+      </div>
+    </div>
+
+    <button class="btn-primary" id="startBtn"><span class="lang-en">Start meal timer</span><span class="lang-zh">开始计时</span></button>
+  </div>
+
+  <div id="runView">
+    <div class="card timer">
+      <div class="status" id="statusText">
+        <span class="lang-en" id="statusEn">Eating&hellip;</span>
+        <span class="lang-zh" id="statusZh">用餐中&hellip;</span>
+      </div>
+      <div class="ring-wrap">
+        <svg viewBox="0 0 240 240">
+          <circle class="run-track" cx="120" cy="120" r="100"></circle>
+          <circle class="run-arc" id="runArc" cx="120" cy="120" r="100" transform="rotate(-90 120 120)"></circle>
+        </svg>
+        <div class="ring-center">
+          <div class="mascot-box" id="mascotBox">
+            <div class="mascot" id="mascot">
+              <span class="mascot-face face-a">😋</span>
+              <span class="mascot-face face-b">😮</span>
+            </div>
+            <span class="eat-bowl" id="eatBowl">🍚</span>
+            <div class="orbit-ring" id="orbitRing"></div>
+          </div>
+          <div class="clock-sub" id="clockText">25:00</div>
+        </div>
+      </div>
+      <p class="rampage-flavor" id="rampageFlavor">
+        <span class="lang-en">🔥 Burn those calories!</span>
+        <span class="lang-zh">🔥 燃烧你的卡路里！</span>
+      </p>
+      <button type="button" id="ackBtn"><span class="lang-en">Stop eating now</span><span class="lang-zh">现在就停下</span></button>
+      <p class="ack-note" id="ackNote">
+        <span class="lang-en">Nice — fork down. Still counting to the finish.</span>
+        <span class="lang-zh">很好，叉子放下了。计时还会继续到结束。</span>
+      </p>
+    </div>
+    <div class="btn-row">
+      <button class="btn-secondary" id="pauseBtn"><span class="lang-en" id="pauseEn">Pause</span><span class="lang-zh" id="pauseZh">暂停</span></button>
+      <button class="btn-secondary" id="resetBtn"><span class="lang-en">Reset</span><span class="lang-zh">重置</span></button>
+    </div>
+  </div>
+
+  <footer>
+    <span class="lang-en">The alert time is drawn once, silently, when you press start — it's never shown, since knowing it defeats the point.</span>
+    <span class="lang-zh">提醒时间在你点击开始时随机生成，不会显示出来 —— 知道了就失去意义了。</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var MAX_MINUTES = 60;
+  var CHART_N = 80;
+  var SIGMA_FRACTION = 0.14;
+
+  // ---------- distribution: truncated normal (parametric) ----------
+  function sampleStandardNormal() {
+    var u1 = Math.random() || 1e-9;
+    var u2 = Math.random();
+    return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+  }
+
+  function sampleTruncatedNormal(mean, sigma, lo, hi) {
+    for (var i = 0; i < 1000; i++) {
+      var x = mean + sigma * sampleStandardNormal();
+      if (x >= lo && x <= hi) return x;
+    }
+    return Math.min(hi, Math.max(lo, mean));
+  }
+
+  function normalPdf(x, mean, sigma) {
+    if (sigma <= 0) return x === mean ? 1 : 0;
+    var z = (x - mean) / sigma;
+    return Math.exp(-0.5 * z * z) / (sigma * Math.sqrt(2 * Math.PI));
+  }
+
+  function buildNormalHeights(T, mean, sigma, n) {
+    var arr = [];
+    for (var i = 0; i <= n; i++) {
+      arr.push(normalPdf((T * i) / n, mean, sigma));
+    }
+    return arr;
+  }
+
+  // ---------- distribution: arbitrary hand-drawn shape ----------
+  // inverse-CDF sampling over a piecewise-linear density (trapezoidal integration)
+  function sampleFromCustomHeights(heights, T) {
+    var n = heights.length - 1;
+    var segW = T / n;
+    var cum = [0];
+    for (var i = 1; i <= n; i++) {
+      cum.push(cum[i - 1] + ((heights[i - 1] + heights[i]) / 2) * segW);
+    }
+    var total = cum[n];
+    if (!(total > 0)) return T / 2;
+    var u = Math.random() * total;
+    for (var k = 1; k <= n; k++) {
+      if (u <= cum[k]) {
+        var lo = cum[k - 1], hi = cum[k];
+        var frac = hi > lo ? (u - lo) / (hi - lo) : 0;
+        return segW * (k - 1 + frac);
+      }
+    }
+    return T;
+  }
+
+  // ---------- persisted settings ----------
+  var STORAGE_KEY = "eightyfull-settings";
+  function loadSettings() {
+    try {
+      var raw = localStorage.getItem(STORAGE_KEY);
+      return raw ? JSON.parse(raw) : null;
+    } catch (e) { return null; }
+  }
+  function saveSettings(totalMinutes, peakPercent, soundStyle) {
+    try {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({ totalMinutes: totalMinutes, peakPercent: peakPercent, soundStyle: soundStyle }));
+    } catch (e) {}
+  }
+
+  // ---------- elements ----------
+  var dialWrap = document.getElementById("dialWrap");
+  var dialArc = document.getElementById("dialArc");
+  var dialHit = document.getElementById("dialHit");
+  var dialTicks = document.getElementById("dialTicks");
+  var dialHandle = document.getElementById("dialHandle");
+  var dialPeak = document.getElementById("dialPeak");
+  var dialMinutesText = document.getElementById("dialMinutesText");
+  var minusBtn = document.getElementById("minusBtn");
+  var plusBtn = document.getElementById("plusBtn");
+
+  var customModeToggle = document.getElementById("customModeToggle");
+  var normalControls = document.getElementById("normalControls");
+  var customControls = document.getElementById("customControls");
+  var resetShapeBtn = document.getElementById("resetShapeBtn");
+
+  var peakPercentInput = document.getElementById("peakPercent");
+  var peakPercentValue = document.getElementById("peakPercentValue");
+  var peakHintEn = document.getElementById("peakHintEn");
+  var peakHintZh = document.getElementById("peakHintZh");
+  var chartWrap = document.getElementById("chartWrap");
+  var chartSvg = document.getElementById("chart");
+
+  var startBtn = document.getElementById("startBtn");
+  var styleBellBtn = document.getElementById("styleBellBtn");
+  var styleSportBtn = document.getElementById("styleSportBtn");
+  var styleParrotBtn = document.getElementById("styleParrotBtn");
+  var notifyCheckbox = document.getElementById("notifyCheckbox");
+  var setupView = document.getElementById("setupView");
+  var runView = document.getElementById("runView");
+  var statusText = document.getElementById("statusText");
+  var statusEn = document.getElementById("statusEn");
+  var statusZh = document.getElementById("statusZh");
+  var clockText = document.getElementById("clockText");
+  var runArc = document.getElementById("runArc");
+  var mascot = document.getElementById("mascot");
+  var mascotBox = document.getElementById("mascotBox");
+  var eatBowl = document.getElementById("eatBowl");
+  var orbitRing = document.getElementById("orbitRing");
+  var rampageFlavor = document.getElementById("rampageFlavor");
+  var ackBtn = document.getElementById("ackBtn");
+  var ackNote = document.getElementById("ackNote");
+  var pauseBtn = document.getElementById("pauseBtn");
+  var pauseEn = document.getElementById("pauseEn");
+  var pauseZh = document.getElementById("pauseZh");
+  var resetBtn = document.getElementById("resetBtn");
+  var flashOverlay = document.getElementById("flashOverlay");
+  var langToggle = document.getElementById("langToggle");
+
+  langToggle.addEventListener("click", function () {
+    var isZh = document.body.classList.toggle("show-zh");
+    langToggle.textContent = isZh ? "EN" : "中文";
+  });
+
+  var totalMinutes = 25;
+  var customMode = false;
+  var customHeights = null; // length CHART_N+1, values in [0,1] when in custom mode
+  var soundStyle = "bell"; // "bell" | "sport" | "parrot"
+  var SOUND_STYLES = ["bell", "sport", "parrot"];
+
+  var saved = loadSettings();
+  if (saved) {
+    if (saved.totalMinutes) totalMinutes = Math.min(MAX_MINUTES, Math.max(1, saved.totalMinutes));
+    if (saved.peakPercent) peakPercentInput.value = saved.peakPercent;
+    if (SOUND_STYLES.indexOf(saved.soundStyle) !== -1) soundStyle = saved.soundStyle;
+  }
+
+  function setSoundStyle(style) {
+    soundStyle = style;
+    styleBellBtn.classList.toggle("active", style === "bell");
+    styleSportBtn.classList.toggle("active", style === "sport");
+    styleParrotBtn.classList.toggle("active", style === "parrot");
+  }
+  setSoundStyle(soundStyle);
+  styleBellBtn.addEventListener("click", function () { setSoundStyle("bell"); ensureAudioCtx(); playChime(); vibrate(); });
+  styleSportBtn.addEventListener("click", function () { setSoundStyle("sport"); ensureAudioCtx(); playChime(); vibrate(); });
+  styleParrotBtn.addEventListener("click", function () { setSoundStyle("parrot"); ensureAudioCtx(); playChime(); vibrate(); });
+
+  function currentPct() {
+    return Math.min(99, Math.max(1, parseFloat(peakPercentInput.value) || 1));
+  }
+
+  function initCustomFromNormal() {
+    var T = totalMinutes;
+    var mean = T * currentPct() / 100;
+    var sigma = Math.max(0.01, T * SIGMA_FRACTION);
+    var raw = buildNormalHeights(T, mean, sigma, CHART_N);
+    var maxV = 0;
+    for (var i = 0; i < raw.length; i++) if (raw[i] > maxV) maxV = raw[i];
+    if (maxV <= 0) maxV = 1;
+    customHeights = raw.map(function (v) { return (v / maxV) * 0.85; });
+  }
+
+  function getCurrentPeakMinutes() {
+    var T = totalMinutes;
+    if (customMode && customHeights) {
+      var maxIdx = 0, maxV = -1;
+      for (var i = 0; i < customHeights.length; i++) {
+        if (customHeights[i] > maxV) { maxV = customHeights[i]; maxIdx = i; }
+      }
+      return (maxIdx / CHART_N) * T;
+    }
+    return T * currentPct() / 100;
+  }
+
+  customModeToggle.addEventListener("change", function () {
+    customMode = customModeToggle.checked;
+    if (customMode) {
+      if (!customHeights) initCustomFromNormal();
+      normalControls.style.display = "none";
+      customControls.style.display = "block";
+    } else {
+      customHeights = null;
+      normalControls.style.display = "block";
+      customControls.style.display = "none";
+    }
+    renderDial();
+    renderChart();
+  });
+
+  resetShapeBtn.addEventListener("click", function () {
+    initCustomFromNormal();
+    renderDial();
+    renderChart();
+  });
+
+  // ---------- dial geometry ----------
+  var CX = 120, CY = 120, R = 100;
+  var CIRC = 2 * Math.PI * R;
+
+  function pointOnCircle(angleDeg, radius) {
+    var rad = (angleDeg * Math.PI) / 180;
+    return { x: CX + radius * Math.sin(rad), y: CY - radius * Math.cos(rad) };
+  }
+
+  [15, 30, 45, 60].forEach(function (m) {
+    var angle = (m / MAX_MINUTES) * 360;
+    var p = pointOnCircle(angle, R - 26);
+    var text = document.createElementNS("http://www.w3.org/2000/svg", "text");
+    text.setAttribute("class", "dial-tick");
+    text.setAttribute("x", p.x.toFixed(1));
+    text.setAttribute("y", p.y.toFixed(1));
+    text.textContent = String(m);
+    dialTicks.appendChild(text);
+  });
+
+  function renderDial() {
+    var fraction = totalMinutes / MAX_MINUTES;
+    dialArc.setAttribute("stroke-dasharray", CIRC.toFixed(2));
+    dialArc.setAttribute("stroke-dashoffset", (CIRC * (1 - fraction)).toFixed(2));
+
+    var handleAngle = fraction * 360;
+    var hp = pointOnCircle(handleAngle, R);
+    dialHandle.setAttribute("cx", hp.x.toFixed(1));
+    dialHandle.setAttribute("cy", hp.y.toFixed(1));
+
+    var peakMinutes = getCurrentPeakMinutes();
+    var peakAngle = (peakMinutes / MAX_MINUTES) * 360;
+    var pp = pointOnCircle(peakAngle, R);
+    dialPeak.setAttribute("cx", pp.x.toFixed(1));
+    dialPeak.setAttribute("cy", pp.y.toFixed(1));
+
+    dialMinutesText.textContent = String(totalMinutes);
+    if (!customMode) peakPercentValue.textContent = currentPct() + "%";
+    peakHintEn.textContent = "≈ " + peakMinutes.toFixed(1) + " min into the meal";
+    peakHintZh.textContent = "用餐约 " + peakMinutes.toFixed(1) + " 分钟时";
+  }
+
+  function angleFromPointer(clientX, clientY) {
+    var rect = dialWrap.querySelector("svg").getBoundingClientRect();
+    var scaleX = 240 / rect.width, scaleY = 240 / rect.height;
+    var px = (clientX - rect.left) * scaleX;
+    var py = (clientY - rect.top) * scaleY;
+    var dx = px - CX, dy = py - CY;
+    var angle = (Math.atan2(dx, -dy) * 180 / Math.PI + 360) % 360;
+    return angle;
+  }
+
+  function minutesFromAngle(angle) {
+    var raw = angle / (360 / MAX_MINUTES);
+    var m = angle < 0.001 ? MAX_MINUTES : Math.round(raw);
+    return Math.min(MAX_MINUTES, Math.max(1, m));
+  }
+
+  var dialDragging = false;
+  function handleDialPointer(e) {
+    var angle = angleFromPointer(e.clientX, e.clientY);
+    totalMinutes = minutesFromAngle(angle);
+    renderDial();
+    renderChart();
+  }
+  dialHit.addEventListener("pointerdown", function (e) {
+    dialDragging = true;
+    dialHit.setPointerCapture(e.pointerId);
+    handleDialPointer(e);
+    e.preventDefault();
+  });
+  dialHit.addEventListener("pointermove", function (e) {
+    if (!dialDragging) return;
+    handleDialPointer(e);
+    e.preventDefault();
+  });
+  ["pointerup", "pointercancel"].forEach(function (evt) {
+    dialHit.addEventListener(evt, function () { dialDragging = false; });
+  });
+
+  minusBtn.addEventListener("click", function () {
+    totalMinutes = Math.max(1, totalMinutes - 1);
+    renderDial();
+    renderChart();
+  });
+  plusBtn.addEventListener("click", function () {
+    totalMinutes = Math.min(MAX_MINUTES, totalMinutes + 1);
+    renderDial();
+    renderChart();
+  });
+
+  // ---------- pdf preview chart (draggable) ----------
+  var CHART_W = 400, CHART_H = 120;
+  var MARGIN = { top: 10, right: 12, bottom: 20, left: 12 };
+
+  function renderChart() {
+    var T = totalMinutes;
+    var heights, maxY;
+    if (customMode) {
+      if (!customHeights) initCustomFromNormal();
+      heights = customHeights;
+      maxY = 1;
+    } else {
+      var mean = T * currentPct() / 100;
+      var sigma = Math.max(0.01, T * SIGMA_FRACTION);
+      heights = buildNormalHeights(T, mean, sigma, CHART_N);
+      maxY = 0;
+      for (var i = 0; i < heights.length; i++) if (heights[i] > maxY) maxY = heights[i];
+      if (maxY <= 0) maxY = 1;
+    }
+
+    var plotW = CHART_W - MARGIN.left - MARGIN.right;
+    var plotH = CHART_H - MARGIN.top - MARGIN.bottom;
+    function px(x) { return MARGIN.left + (x / T) * plotW; }
+    function py(y) { return MARGIN.top + plotH - (Math.min(y, maxY) / maxY) * plotH; }
+
+    var linePts = [];
+    for (var j = 0; j <= CHART_N; j++) {
+      var x = (T * j) / CHART_N;
+      linePts.push(px(x).toFixed(1) + "," + py(heights[j]).toFixed(1));
+    }
+    var areaPts = "M" + px(0).toFixed(1) + "," + py(0).toFixed(1) + " L" +
+      linePts.join(" L") + " L" + px(T).toFixed(1) + "," + py(0).toFixed(1) + " Z";
+    var linePath = "M" + linePts.join(" L");
+
+    var baseY = (MARGIN.top + plotH).toFixed(1);
+    var peakX = px(getCurrentPeakMinutes()).toFixed(1);
+
+    var parts = [];
+    parts.push('<path class="chart-area" d="' + areaPts + '"></path>');
+    parts.push('<path class="chart-line" d="' + linePath + '"></path>');
+    parts.push('<line class="chart-baseline" x1="' + MARGIN.left + '" y1="' + baseY + '" x2="' + (CHART_W - MARGIN.right) + '" y2="' + baseY + '"></line>');
+    parts.push('<line class="chart-peak-line" x1="' + peakX + '" y1="' + MARGIN.top + '" x2="' + peakX + '" y2="' + baseY + '"></line>');
+    parts.push('<text class="chart-label" x="' + MARGIN.left + '" y="' + (CHART_H - 5) + '">0 min</text>');
+    parts.push('<text class="chart-label" x="' + (CHART_W - MARGIN.right) + '" y="' + (CHART_H - 5) + '" text-anchor="end">' + T.toFixed(0) + ' min</text>');
+
+    chartSvg.innerHTML = parts.join("");
+  }
+
+  function chartPointFromClient(clientX, clientY) {
+    var rect = chartWrap.getBoundingClientRect();
+    var scaleX = CHART_W / rect.width, scaleY = CHART_H / rect.height;
+    var px_ = (clientX - rect.left) * scaleX;
+    var py_ = (clientY - rect.top) * scaleY;
+    var plotW = CHART_W - MARGIN.left - MARGIN.right;
+    var plotH = CHART_H - MARGIN.top - MARGIN.bottom;
+    var xMin = ((px_ - MARGIN.left) / plotW) * totalMinutes;
+    var yFrac = 1 - ((py_ - MARGIN.top) / plotH);
+    xMin = Math.min(totalMinutes, Math.max(0, xMin));
+    yFrac = Math.min(1, Math.max(0, yFrac));
+    return { xMin: xMin, yFrac: yFrac };
+  }
+
+  var chartDragging = false;
+  var lastCustomIdx = null;
+  function handleChartPointer(e) {
+    var pt = chartPointFromClient(e.clientX, e.clientY);
+    if (!customMode) {
+      var newPct = Math.round((pt.xMin / totalMinutes) * 100);
+      newPct = Math.min(99, Math.max(1, newPct));
+      peakPercentInput.value = newPct;
+      renderDial();
+      renderChart();
+      return;
+    }
+    var idx = Math.round((pt.xMin / totalMinutes) * CHART_N);
+    idx = Math.min(CHART_N, Math.max(0, idx));
+    if (lastCustomIdx === null) lastCustomIdx = idx;
+    var lo = Math.min(lastCustomIdx, idx), hi = Math.max(lastCustomIdx, idx);
+    for (var i = lo; i <= hi; i++) customHeights[i] = pt.yFrac;
+    lastCustomIdx = idx;
+    renderDial();
+    renderChart();
+  }
+  chartWrap.addEventListener("pointerdown", function (e) {
+    chartDragging = true;
+    lastCustomIdx = null;
+    chartWrap.setPointerCapture(e.pointerId);
+    handleChartPointer(e);
+    e.preventDefault();
+  });
+  chartWrap.addEventListener("pointermove", function (e) {
+    if (!chartDragging) return;
+    handleChartPointer(e);
+    e.preventDefault();
+  });
+  ["pointerup", "pointercancel"].forEach(function (evt) {
+    chartWrap.addEventListener(evt, function () { chartDragging = false; lastCustomIdx = null; });
+  });
+
+  peakPercentInput.addEventListener("input", function () { renderDial(); renderChart(); });
+  renderDial();
+  renderChart();
+
+  // ---------- audio / haptics / notifications ----------
+  var audioCtx = null;
+  function ensureAudioCtx() {
+    if (!audioCtx) {
+      var Ctx = window.AudioContext || window.webkitAudioContext;
+      if (Ctx) audioCtx = new Ctx();
+    }
+    if (audioCtx && audioCtx.state === "suspended") audioCtx.resume();
+    return audioCtx;
+  }
+
+  // a single bell/music-box note: fundamental + a quiet detuned overtone for shimmer,
+  // long exponential decay so notes ring into each other instead of cutting off flat
+  function playBellNote(ctx, freq, t, duration, pan) {
+    var dest = ctx.destination;
+    if (ctx.createStereoPanner) {
+      var panner = ctx.createStereoPanner();
+      panner.pan.value = pan;
+      panner.connect(ctx.destination);
+      dest = panner;
+    }
+
+    var osc1 = ctx.createOscillator();
+    osc1.type = "sine";
+    osc1.frequency.value = freq;
+    var gain1 = ctx.createGain();
+    gain1.gain.setValueAtTime(0.0001, t);
+    gain1.gain.exponentialRampToValueAtTime(0.3, t + 0.008);
+    gain1.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+    osc1.connect(gain1).connect(dest);
+    osc1.start(t);
+    osc1.stop(t + duration + 0.05);
+
+    var osc2 = ctx.createOscillator();
+    osc2.type = "sine";
+    osc2.frequency.value = freq * 2.01; // slightly detuned overtone = shimmer, not a plain octave
+    var gain2 = ctx.createGain();
+    gain2.gain.setValueAtTime(0.0001, t);
+    gain2.gain.exponentialRampToValueAtTime(0.09, t + 0.008);
+    gain2.gain.exponentialRampToValueAtTime(0.0001, t + duration * 0.55);
+    osc2.connect(gain2).connect(dest);
+    osc2.start(t);
+    osc2.stop(t + duration + 0.05);
+  }
+
+  // an original, copyright-free bell cascade (C6-G5-E5-C5-E5-G5-C6) — overlapping,
+  // gently panned notes that ring together like a small wind chime, not flat beeps
+  function playBellChime() {
+    var ctx = ensureAudioCtx();
+    if (!ctx) return;
+    var now = ctx.currentTime;
+    var notes = [1046.50, 783.99, 659.25, 523.25, 659.25, 783.99, 1046.50];
+    var pans = [-0.5, -0.25, 0, 0.15, 0, -0.25, 0.5];
+    notes.forEach(function (freq, i) {
+      playBellNote(ctx, freq, now + i * 0.09, 0.85, pans[i]);
+    });
+  }
+
+  // a single coach's-whistle blast: sawtooth core + fast vibrato for that breathy warble
+  function playWhistleBlast(ctx, t, duration) {
+    var osc = ctx.createOscillator();
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(2900, t);
+
+    var lfo = ctx.createOscillator();
+    lfo.frequency.value = 34;
+    var lfoGain = ctx.createGain();
+    lfoGain.gain.value = 70;
+    lfo.connect(lfoGain).connect(osc.frequency);
+    lfo.start(t);
+    lfo.stop(t + duration + 0.05);
+
+    var gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.exponentialRampToValueAtTime(0.3, t + 0.015);
+    gain.gain.setValueAtTime(0.3, t + duration - 0.03);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+    osc.connect(gain).connect(ctx.destination);
+    osc.start(t);
+    osc.stop(t + duration + 0.05);
+  }
+
+  // a punchy power-chord stab (perfect fifth, square wave) for a "let's go" hit
+  function playPowerStab(ctx, t) {
+    [523.25, 783.99].forEach(function (freq) {
+      var osc = ctx.createOscillator();
+      osc.type = "square";
+      osc.frequency.value = freq;
+      var gain = ctx.createGain();
+      gain.gain.setValueAtTime(0.0001, t);
+      gain.gain.exponentialRampToValueAtTime(0.2, t + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+      osc.connect(gain).connect(ctx.destination);
+      osc.start(t);
+      osc.stop(t + 0.2);
+    });
+  }
+
+  // an original, copyright-free "sporty" alert: two whistle blasts + a power-chord stab
+  function playSportChime() {
+    var ctx = ensureAudioCtx();
+    if (!ctx) return;
+    var now = ctx.currentTime;
+    playWhistleBlast(ctx, now, 0.16);
+    playWhistleBlast(ctx, now + 0.22, 0.16);
+    playPowerStab(ctx, now + 0.46);
+  }
+
+  // one shared noise buffer reused for the parrot's raspy texture
+  var noiseBufferCache = null;
+  function getNoiseBuffer(ctx) {
+    if (!noiseBufferCache) {
+      var len = Math.floor(ctx.sampleRate * 0.3);
+      noiseBufferCache = ctx.createBuffer(1, len, ctx.sampleRate);
+      var data = noiseBufferCache.getChannelData(0);
+      for (var i = 0; i < len; i++) data[i] = Math.random() * 2 - 1;
+    }
+    return noiseBufferCache;
+  }
+
+  // a single parrot squawk: two detuned sawtooths (roughness) + a fast wobble (chatter)
+  // + a touch of filtered noise (rasp), all through a bandpass filter for that nasal squawk tone
+  function playSquawk(ctx, t, duration, startFreq, peakFreq, endFreq) {
+    var filter = ctx.createBiquadFilter();
+    filter.type = "bandpass";
+    filter.frequency.value = peakFreq;
+    filter.Q.value = 3.5;
+
+    var gain = ctx.createGain();
+    gain.gain.setValueAtTime(0.0001, t);
+    gain.gain.exponentialRampToValueAtTime(0.55, t + 0.02);
+    gain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+    filter.connect(gain).connect(ctx.destination);
+
+    [0, 14].forEach(function (detuneCents) {
+      var osc = ctx.createOscillator();
+      osc.type = "sawtooth";
+      osc.detune.value = detuneCents;
+      osc.frequency.setValueAtTime(startFreq, t);
+      osc.frequency.linearRampToValueAtTime(peakFreq, t + duration * 0.35);
+      osc.frequency.linearRampToValueAtTime(endFreq, t + duration);
+
+      var lfo = ctx.createOscillator();
+      lfo.frequency.value = 42;
+      var lfoGain = ctx.createGain();
+      lfoGain.gain.value = 90;
+      lfo.connect(lfoGain).connect(osc.frequency);
+      lfo.start(t);
+      lfo.stop(t + duration + 0.05);
+
+      osc.connect(filter);
+      osc.start(t);
+      osc.stop(t + duration + 0.05);
+    });
+
+    var noiseSrc = ctx.createBufferSource();
+    noiseSrc.buffer = getNoiseBuffer(ctx);
+    var noiseGain = ctx.createGain();
+    noiseGain.gain.setValueAtTime(0.0001, t);
+    noiseGain.gain.exponentialRampToValueAtTime(0.12, t + 0.02);
+    noiseGain.gain.exponentialRampToValueAtTime(0.0001, t + duration);
+    noiseSrc.connect(noiseGain).connect(filter);
+    noiseSrc.start(t);
+    noiseSrc.stop(t + duration + 0.05);
+  }
+
+  // an original, copyright-free parrot-squawk alert: three raspy, chattering squawks
+  function playParrotChime() {
+    var ctx = ensureAudioCtx();
+    if (!ctx) return;
+    var now = ctx.currentTime;
+    playSquawk(ctx, now, 0.18, 900, 2200, 1400);
+    playSquawk(ctx, now + 0.22, 0.16, 1100, 2400, 1600);
+    playSquawk(ctx, now + 0.44, 0.22, 800, 2000, 1200);
+  }
+
+  function playChime() {
+    if (soundStyle === "sport") playSportChime();
+    else if (soundStyle === "parrot") playParrotChime();
+    else playBellChime();
+  }
+
+  function vibrate() {
+    if (navigator.vibrate) navigator.vibrate([200, 100, 200, 100, 200]);
+  }
+
+  function flashScreen() {
+    flashOverlay.classList.remove("pulse");
+    void flashOverlay.offsetWidth;
+    flashOverlay.classList.add("pulse");
+  }
+
+  function sparkleBurst() {
+    var old = mascotBox.querySelectorAll(".sparkle");
+    old.forEach(function (el) { el.remove(); });
+    var count = 5;
+    for (var idx = 0; idx < count; idx++) {
+      var span = document.createElement("span");
+      span.className = "sparkle";
+      span.textContent = "✨";
+      span.style.setProperty("--ang", (idx * (360 / count)) + "deg");
+      mascotBox.appendChild(span);
+    }
+    mascotBox.classList.remove("sparkle-burst");
+    void mascotBox.offsetWidth;
+    mascotBox.classList.add("sparkle-burst");
+  }
+
+  function spawnFoodOrbit() {
+    orbitRing.innerHTML = "";
+    var foods = ["🍙", "🍗", "🍕", "🍩"];
+    foods.forEach(function (f, i) {
+      var span = document.createElement("span");
+      span.className = "orbit-food";
+      span.textContent = f;
+      span.style.setProperty("--start-angle", (i * 90) + "deg");
+      orbitRing.appendChild(span);
+    });
+  }
+  function removeFoodOrbit() {
+    orbitRing.innerHTML = "";
+  }
+
+  var notifyPermissionRequested = false;
+  notifyCheckbox.addEventListener("change", function () {
+    if (notifyCheckbox.checked && "Notification" in window && !notifyPermissionRequested) {
+      notifyPermissionRequested = true;
+      Notification.requestPermission();
+    }
+  });
+
+  function notifyIfHidden() {
+    if (!notifyCheckbox.checked) return;
+    if (!("Notification" in window)) return;
+    if (document.visibilityState !== "hidden") return;
+    if (Notification.permission === "granted") {
+      new Notification("EightyFull 八分饱", { body: statusEn.textContent + " " + statusZh.textContent });
+    }
+  }
+
+  // ---------- timer state machine ----------
+  var totalSeconds = 0;
+  var alarmSeconds = 0;
+  var alarmFired = false;
+  var alarmAcknowledged = false;
+  var rampageMode = false;
+  var startTime = 0;
+  var pausedElapsed = 0;
+  var isPaused = false;
+  var tickHandle = null;
+
+  // each repeat fires sooner than the last (interval shrinks by `decay` toward `min`)
+  // until acknowledged, then gives up after `maxMs` of nagging
+  var NAG_PRESETS = {
+    peak:    { start: 7000, min: 1500, decay: 0.78, maxMs: 90000 },
+    rampage: { start: 4000, min: 900,  decay: 0.75, maxMs: 120000 }
+  };
+  var alarmRepeatTimeoutId = null;
+  var alarmNagStartTime = 0;
+  var alarmCurrentInterval = 0;
+
+  function stopAlarmRepeat() {
+    if (alarmRepeatTimeoutId) {
+      clearTimeout(alarmRepeatTimeoutId);
+      alarmRepeatTimeoutId = null;
+    }
+  }
+
+  function scheduleNextNag(preset) {
+    alarmRepeatTimeoutId = setTimeout(function () {
+      if (alarmAcknowledged || isPaused) return;
+      if (Date.now() - alarmNagStartTime > preset.maxMs) return;
+      playChime();
+      vibrate();
+      flashScreen();
+      alarmCurrentInterval = Math.max(preset.min, alarmCurrentInterval * preset.decay);
+      scheduleNextNag(preset);
+    }, alarmCurrentInterval);
+  }
+
+  function startAlarmRepeat(preset) {
+    stopAlarmRepeat();
+    alarmNagStartTime = Date.now();
+    alarmCurrentInterval = preset.start;
+    scheduleNextNag(preset);
+  }
+
+  function formatClock(totalSecs) {
+    var s = Math.max(0, Math.round(totalSecs));
+    var m = Math.floor(s / 60);
+    var r = s % 60;
+    return m + ":" + (r < 10 ? "0" : "") + r;
+  }
+
+  function currentElapsed() {
+    if (isPaused) return pausedElapsed;
+    return pausedElapsed + (Date.now() - startTime) / 1000;
+  }
+
+  function setStatus(en, zh, alert) {
+    statusEn.textContent = en;
+    statusZh.textContent = zh;
+    statusText.classList.toggle("alert", !!alert);
+  }
+
+  function setPauseLabel(en, zh) {
+    pauseEn.textContent = en;
+    pauseZh.textContent = zh;
+  }
+
+  function resetRampageVisuals() {
+    rampageMode = false;
+    document.body.classList.remove("rampage");
+    runArc.classList.remove("rampage-ring");
+    mascotBox.classList.remove("rampage-mascot");
+    eatBowl.textContent = "🍚";
+    removeFoodOrbit();
+    rampageFlavor.classList.remove("show");
+  }
+
+  function enterRampage() {
+    rampageMode = true;
+    document.body.classList.add("rampage");
+    runArc.classList.remove("done");
+    runArc.classList.add("rampage-ring");
+    mascotBox.classList.add("rampage-mascot");
+    eatBowl.textContent = "🍲";
+    spawnFoodOrbit();
+    rampageFlavor.classList.add("show");
+
+    alarmAcknowledged = false;
+    ackBtn.style.display = "block";
+    ackNote.classList.remove("show");
+
+    mascot.classList.remove("alert-bounce");
+    void mascot.offsetWidth;
+    mascot.classList.add("alert-bounce");
+    sparkleBurst();
+    setStatus("🔥 Rampage mode — still going?", "🔥 狂暴模式 —— 还在吃？", true);
+    playChime();
+    vibrate();
+    flashScreen();
+    notifyIfHidden();
+    startAlarmRepeat(NAG_PRESETS.rampage);
+  }
+
+  function tick() {
+    var elapsed = currentElapsed();
+    var remaining = totalSeconds - elapsed;
+
+    if (!alarmFired && elapsed >= alarmSeconds) {
+      alarmFired = true;
+      setStatus("🔔 Consider stopping — near your target.", "该考虑停下了 —— 你接近目标啦。", true);
+      playChime();
+      vibrate();
+      flashScreen();
+      sparkleBurst();
+      notifyIfHidden();
+      mascot.classList.remove("alert-bounce");
+      void mascot.offsetWidth;
+      mascot.classList.add("alert-bounce");
+      runArc.classList.add("done");
+      ackBtn.style.display = "block";
+      startAlarmRepeat(NAG_PRESETS.peak);
+    }
+
+    if (elapsed >= totalSeconds) {
+      if (!rampageMode) enterRampage();
+      var overtime = elapsed - totalSeconds;
+      clockText.textContent = "+" + formatClock(overtime);
+      runArc.setAttribute("stroke-dasharray", CIRC.toFixed(2));
+      runArc.setAttribute("stroke-dashoffset", "0");
+      return;
+    }
+
+    var progress = Math.max(0, Math.min(1, remaining / totalSeconds));
+    runArc.setAttribute("stroke-dasharray", CIRC.toFixed(2));
+    runArc.setAttribute("stroke-dashoffset", (CIRC * (1 - progress)).toFixed(2));
+    clockText.textContent = formatClock(remaining);
+  }
+
+  function startTicking() {
+    stopTicking();
+    tickHandle = setInterval(tick, 250);
+    tick();
+  }
+  function stopTicking() {
+    if (tickHandle) {
+      clearInterval(tickHandle);
+      tickHandle = null;
+    }
+  }
+
+  startBtn.addEventListener("click", function () {
+    var pct = currentPct();
+    saveSettings(totalMinutes, pct, soundStyle);
+
+    ensureAudioCtx();
+
+    var T = totalMinutes;
+    totalSeconds = T * 60;
+    var alarmMinutes;
+    if (customMode && customHeights) {
+      alarmMinutes = sampleFromCustomHeights(customHeights, T);
+    } else {
+      var meanMinutes = T * pct / 100;
+      var sigmaMinutes = Math.max(0.01, T * SIGMA_FRACTION);
+      alarmMinutes = sampleTruncatedNormal(meanMinutes, sigmaMinutes, 0, T);
+    }
+    alarmSeconds = alarmMinutes * 60;
+
+    alarmFired = false;
+    alarmAcknowledged = false;
+    stopAlarmRepeat();
+    resetRampageVisuals();
+    pausedElapsed = 0;
+    isPaused = false;
+    startTime = Date.now();
+
+    setupView.style.display = "none";
+    runView.style.display = "block";
+    runArc.classList.remove("done");
+    mascot.classList.remove("alert-bounce");
+    mascotBox.classList.remove("sparkle-burst");
+    ackBtn.style.display = "none";
+    ackNote.classList.remove("show");
+    setStatus("Eating…", "用餐中…", false);
+    pauseBtn.disabled = false;
+    setPauseLabel("Pause", "暂停");
+
+    startTicking();
+  });
+
+  ackBtn.addEventListener("click", function () {
+    alarmAcknowledged = true;
+    stopAlarmRepeat();
+    ackBtn.style.display = "none";
+    ackNote.classList.add("show");
+    if (rampageMode) removeFoodOrbit();
+  });
+
+  pauseBtn.addEventListener("click", function () {
+    if (!isPaused) {
+      pausedElapsed = currentElapsed();
+      isPaused = true;
+      stopTicking();
+      setPauseLabel("Resume", "继续");
+      if (!alarmFired) setStatus("Paused", "已暂停", false);
+    } else {
+      startTime = Date.now();
+      isPaused = false;
+      setPauseLabel("Pause", "暂停");
+      if (alarmFired) {
+        if (rampageMode) {
+          setStatus("🔥 Rampage mode — still going?", "🔥 狂暴模式 —— 还在吃？", true);
+          if (!alarmAcknowledged) startAlarmRepeat(NAG_PRESETS.rampage);
+        } else {
+          setStatus("🔔 Consider stopping — near your target.", "该考虑停下了 —— 你接近目标啦。", true);
+          if (!alarmAcknowledged) startAlarmRepeat(NAG_PRESETS.peak);
+        }
+      } else {
+        setStatus("Eating…", "用餐中…", false);
+      }
+      startTicking();
+    }
+  });
+
+  resetBtn.addEventListener("click", function () {
+    stopTicking();
+    stopAlarmRepeat();
+    isPaused = false;
+    resetRampageVisuals();
+    pauseBtn.disabled = false;
+    setupView.style.display = "block";
+    runView.style.display = "none";
+    renderDial();
+    renderChart();
+  });
+})();
+</script>
+</body>
+</html>
