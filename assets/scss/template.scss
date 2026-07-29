@@ -19,6 +19,14 @@ body {
   background-color: rgb(247, 250, 252);
 }
 
+// always-visible link back to the posts list, at the top of every post
+.back-to-posts-link {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
 .dark .page-footer {
   background-color: rgb(26, 32, 44);
 }

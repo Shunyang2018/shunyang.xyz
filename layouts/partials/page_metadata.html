@@ -1,6 +1,10 @@
 {{ $is_list := .is_list }}
 {{ $page := .page }}
 
+{{ if and (eq $page.Section "posts") (ne $is_list 1) }}
+<a href="/posts/" class="back-to-posts-link">&larr; Back to posts</a>
+{{ end }}
+
 <div class="article-metadata">
 
   {{ if $page.Params.authors }}
