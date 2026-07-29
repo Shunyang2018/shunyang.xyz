@@ -22,14 +22,28 @@ date_format: Jan 2006
 #   Leave `date_end` empty if it's your current employer.
 #   Begin multi-line descriptions with YAML's `|2-` multi-line prefix.
 experience:
+  - title: Machine Learning and Computational Chemistry Scientist
+    company: Genentech
+    company_url: 'https://www.gene.com/'
+    company_logo: GEN
+    location: South San Francisco
+    date_start: '2025-03-10'
+    date_end: ''
+    description: |2-
+        * Machine learning and computational chemistry for drug discovery
+        * Developing automation pipelines for molecular property prediction
+        * Leveraging quantum chemistry and cheminformatics to accelerate lead optimization
   - title: Scientist
     company: Brightseed
     company_url: 'https://www.brightseedbio.com/'
     company_logo: BSD
     location: South San Francisco
     date_start: '2023-02-01'
-    date_end: ''
-    description: Computational Metabolomics Scientist
+    date_end: '2025-03-09'
+    description: |2-
+        * Computational metabolomics and data science for bioactive compound discovery
+        * Development of retention time prediction models using graph neural networks
+        * Annotation and curation of large-scale mass spectrometry databases
 
   - title: PhD Internship
     company: Brightseed

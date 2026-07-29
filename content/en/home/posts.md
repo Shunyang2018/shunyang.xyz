@@ -10,7 +10,7 @@ headless: true
 weight: 20
 
 content:
-  count: 5  # Limit to 5 most recent posts
+  count: 2  # Keep the homepage focused on the latest posts
   filters:
     folders:
       - posts
@@ -21,7 +21,13 @@ content:
   order: desc
 
 design:
-  view: compact
-  columns: '2'
+  view: card
+  columns: '1'
 
 ---
+
+<nav class="post-topic-bar" aria-label="Post topics">
+  <a href="/posts/">All Posts</a>
+  <a href="/series/lab-automation-learnings/">Lab Automation</a>
+  <a href="/series/ai-and-coding-learnings/">AI &amp; Coding</a>
+</nav>

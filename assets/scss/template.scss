@@ -115,3 +115,103 @@ ul.network-icon .big-icon {
 .wg-about .portrait-title h3 {
   font-size: 0.8rem;
 }
+
+// Show recent posts as a responsive card grid instead of a long list.
+#posts .row > .col-12:not(.section-heading) {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+
+#posts .row > .col-12:not(.section-heading) > * {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+#posts .post-topic-bar {
+  display: flex;
+  grid-column: 1 / -1;
+  gap: 0.6rem;
+  align-items: center;
+  flex-wrap: wrap;
+  padding-bottom: 0.1rem;
+}
+
+#posts .post-topic-bar a {
+  padding: 0.35rem 0.8rem;
+  border: 1px solid rgba(21, 101, 192, 0.25);
+  border-radius: 999px;
+  color: #1565c0;
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background-color 150ms ease-in-out, color 150ms ease-in-out;
+}
+
+#posts .post-topic-bar a:hover,
+#posts .post-topic-bar a:focus {
+  color: #fff;
+  background: #1565c0;
+}
+
+.dark #posts .post-topic-bar a {
+  border-color: rgba(144, 202, 249, 0.3);
+  color: #90caf9;
+}
+
+.dark #posts .post-topic-bar a:hover,
+.dark #posts .post-topic-bar a:focus {
+  color: #17202b;
+  background: #90caf9;
+}
+
+#posts .card-simple {
+  overflow: hidden;
+  padding-bottom: 1rem;
+  border: 1px solid rgba(31, 41, 55, 0.08);
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(31, 41, 55, 0.06);
+}
+
+#posts .card-simple .article-banner {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
+#posts .card-simple .article-metadata,
+#posts .card-simple .article-title {
+  margin-right: 1rem;
+  margin-left: 1rem;
+}
+
+#posts .card-simple .article-title {
+  margin-top: 0.65rem !important;
+  font-size: 1.05rem;
+  line-height: 1.35;
+}
+
+#posts .card-simple .article-style {
+  display: none;
+}
+
+#posts .card-simple .article-metadata {
+  margin-top: 0.75rem;
+  font-size: 0.78rem;
+}
+
+.dark #posts .card-simple {
+  border-color: rgba(255, 255, 255, 0.08);
+  box-shadow: none;
+}
+
+#posts .see-all {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 767px) {
+  #posts .row > .col-12:not(.section-heading) {
+    grid-template-columns: 1fr;
+  }
+}

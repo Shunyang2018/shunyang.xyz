@@ -30,10 +30,10 @@ experience:
     date_start: '2018-09-04'
     date_end: '2023-11-18'
     description:  |2-
-        * Mentor: Dr. Dean J. Tantillo, Dr. Tobias Kind, Dr. Oliver Fiehn
-        * Dissertation: Theoretical and experimental explorations on compound identification in metabolomics  
-        * Theoretical and experimental explorations on compound identification in metabolomics
-        * Build of high-resolution mass spectral library with Electron and Chemical Ionization source
+        * Mentors: Dr. Dean J. Tantillo, Dr. Tobias Kind, Dr. Oliver Fiehn
+        * Dissertation: Theoretical and experimental explorations on compound identification in metabolomics
+        * Development of high-resolution mass spectral library with electron and chemical ionization sources
+        * Advanced analytical chemistry and computational metabolomics research
 
   - title: B.S. in Applied Chemistry
     company: Shandong University, Weihai
@@ -43,9 +43,9 @@ experience:
     date_start: '2014-09-01'
     date_end: '2018-06-30'
     description:  |2-
-        * Mentor: Dr. Haibei Li, Dr. Ming bai
-        * Dissertation: Theoretical study on the intermolecular interactions between polyfluorene, polythiophene, and single-walled carbon nanotubes
-        * Marine College Soccer Team
+        * Mentors: Dr. Haibei Li, Dr. Ming Bai
+        * Thesis: Theoretical study on intermolecular interactions between polyfluorene, polythiophene, and single-walled carbon nanotubes
+        * Computational chemistry and materials science research
 
 design:
   columns: '1'

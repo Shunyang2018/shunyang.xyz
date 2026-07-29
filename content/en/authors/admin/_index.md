@@ -7,7 +7,7 @@ title_chinese: 王顺阳
 superuser: true
 
 # Role/position
-role: 'Scientist, Computational Metabolomics'
+role: 'Machine Learning and Computational Chemistry Scientist'
 
 # Status emoji
 status:
@@ -15,11 +15,11 @@ status:
 
 # Organizations/Affiliations
 organizations:
-- name: Brightseed
-  url: "https://www.brightseedbio.com/"
+- name: Genentech
+  url: "https://www.gene.com/scientists/our-scientists"
 
 # Short bio (displayed in user profile at end of posts)
-bio: My research interests include metabolomics, cheminformatics and quantum chemistry.
+bio: Computational chemistry scientist with expertise in metabolomics, cheminformatics, and machine learning. Passionate about leveraging data science to accelerate drug discovery and solve real-world problems.
 
 Interests:
 - Metabolomics
@@ -79,7 +79,7 @@ social:
 email: "lygwangshunyang@gmail.com"
 ---
 
-Shunyang Wang is a computational chemistry scientist with a passion for leveraging big data to solve real-world problems. He is fascinated by building models that uncover and explain the underlying rules of nature. A firm believer in the power of science to make the world a better place, Shunyang enjoys reading, cooking, surfing, hiking, e-gaming, and soccer. If you're a fellow foodie, he’s sure to be a great friend.
+Shunyang Wang is a computational chemistry scientist at Genentech with a passion for leveraging machine learning and data science to accelerate drug discovery. He is fascinated by building interpretable models that uncover and explain the underlying rules of nature. A firm believer in the power of science to make the world a better place, Shunyang enjoys reading, cooking, surfing, hiking, and soccer.
 
 
 {{< icon name="download" pack="fas" >}} {{< staticref "uploads/resume.pdf" "newtab" >}}Download{{< /staticref >}} my resumé as a PDF.

@@ -11,7 +11,14 @@ baseURL: 'https://shunyangwang.netlify.app/' # Website URL
 ############################
 
 cascade:
-  # Blog post options
+  # Blog post options (paths match content/en/posts/ → logical path posts/**)
+  - _target:
+      path: posts/**
+    editable: true
+    reading_time: true
+    commentable: true
+    show_related: true
+    show_breadcrumb: true
   - _target:
       path: /post/**
     editable: true
@@ -54,6 +61,7 @@ permalinks:
   authors: '/author/:slug/'
   tags: '/tag/:slug/'
   categories: '/category/:slug/'
+  series: '/series/:slug/'
 disableAliases: true
 outputs:
   home: [HTML, RSS, JSON, WebAppManifest, headers, redirects]
@@ -66,6 +74,7 @@ timeout: 600000
 taxonomies:
   tag: tags
   category: categories
+  series: series
   author: authors
 markup:
   _merge: deep
@@ -78,6 +87,8 @@ related:
       weight: 100
     - name: categories
       weight: 70
+    - name: series
+      weight: 90
 security:
   _merge: deep
 sitemap:

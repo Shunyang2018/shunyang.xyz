@@ -1,6 +1,7 @@
 ---
 title: Run a Free Local LLM and Share It with Your Family and Friends in 4 Hours
 summary: This tutorial guides you through setting up a local DeepSeek-R1 model with Open WebUI, ZeroTier, and Docker on Windows using an NVIDIA RTX 3090.
+commentable: true
 tags:
   - LLM
 date: 2025-01-29
