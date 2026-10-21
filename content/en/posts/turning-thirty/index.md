@@ -1,13 +1,13 @@
 ---
 title: "30岁小记"
-subtitle: "感谢陪我成长的大家，感谢自己。"
+subtitle: "时间就在周一盼周五，冬天盼夏天，入学盼毕业，入职盼升职中过去了。"
 date: 2026-10-20T00:00:00-07:00
 draft: false
 commentable: true
 comment_provider: moderated
 comments_key: turning-thirty
 isCJKLanguage: true
-summary: "感谢陪我成长的大家，感谢自己。"
+summary: "时间就在周一盼周五，冬天盼夏天，入学盼毕业，入职盼升职中过去了。"
 tags:
   - 随笔
   - 成长
