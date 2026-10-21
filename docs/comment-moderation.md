@@ -1,42 +1,20 @@
-# 博文留言审核
+# 博文留言
 
-读者在文章底部填昵称和留言，无需 GitHub 账号。Netlify Forms 收到的内容不会自动公开。
+留言无需作者审核，通过 Netlify Forms 自带垃圾信息筛查后自动公开。此前的测试留言不迁移到公开列表。
 
-## 查看待审核留言
+## 收件、提醒及备份
 
-打开 https://app.netlify.com/projects/shunyangwang/forms ，选择 `blog-comments`。
-请同时查看 spam 列表，避免漏掉误判的留言。
+后台：https://app.netlify.com/projects/shunyangwang/forms/6ad86371bc43107f936d579f
 
-Netlify 的 Verified 仅代表通过垃圾信息筛查，不代表作者批准公开。
+提交仍由 Netlify Forms 接收，现有 Gmail 提醒和 Download as CSV 导出继续可用。被判为垃圾信息的提交不会自动公开，后台标为 Verified 后会触发自动发布。
 
-## 批准并公开
+原始提交保存在 Forms；公开副本保存在站点级 Blobs 的 public-blog-comments store，重新部署网站不会清空。接口只公开昵称、正文、时间和 ID，不公开 IP 或后台元数据。新留言不再依赖 Git 提交；历史 data/comments/<post>.yaml 仍可显示。
 
-由作者决定公开哪些留言。将获批留言写入对应的 `data/comments/<post>.yaml`，提交并推送后，网站会重新构建、显示留言。
+## 删除公开留言
 
-例如《30岁小记》使用 `data/comments/turning-thirty.yaml`。将初始的 `[]` 替换为：
+Netlify → Data & storage → Blobs → public-blog-comments → 对应文章目录，找到对应记录。可先下载备份再删除。
+仅删除 Forms 原始提交或改为 spam 不会撤回已经公开的副本；需要删除 Blobs 的对应记录。
 
-```yaml
-- name: "读者昵称"
-  date: "2026-10-21"
-  message: |-
-    此处粘贴已批准的留言原文。
-  reply: |-
-    可选的作者回复；不回复时删除 reply 字段。
-```
+## 在其他文章启用
 
-后续在列表中追加。只复制作者确认公开的昵称、正文及可选日期；不要公开 Netlify 后台的 IP、邮件等元数据。
-留言按纯文本输出，模板不执行留言里的 HTML 或脚本。
-
-也可以直接让 Codex 帮忙查看待审核留言，由作者确认具体留言后再发布。
-
-## 在其他博文启用
-
-在文章 front matter 中设置：
-
-```yaml
-commentable: true
-comment_provider: moderated
-comments_key: turning-thirty
-```
-
-新文章使用自己的唯一 `comments_key`，并新增同名 YAML 文件。其他文章原有的 Giscus 留言保持不变。
+沿用 commentable: true、comment_provider: moderated、唯一的 comments_key。provider 名称为兼容既有模板而保留，实际上已不需要作者审核。

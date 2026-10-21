@@ -10,6 +10,6 @@ build:
   render: always
 ---
 
-谢谢你留下想法。留言将在作者审核后公开。
+谢谢你留下想法。留言会自动公开，通常几秒后即可在文章下方看到。
 
 [返回《30岁小记》](/posts/turning-thirty/#comments-heading)

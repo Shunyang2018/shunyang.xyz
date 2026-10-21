@@ -2,6 +2,7 @@
 {{ $comments := index (site.Data.comments | default dict) $key }}
 <section class="moderated-comments" lang="zh-CN" aria-labelledby="comments-heading">
   <h2 id="comments-heading">留言</h2>
+  <div id="live-comments" data-post="{{ $key }}">
   {{ range $comments }}
     <article class="reader-comment">
       <p><strong>{{ .name }}</strong>{{ with .date }} <small>· {{ . }}</small>{{ end }}</p>
@@ -9,9 +10,10 @@
       {{ with .reply }}<p class="reader-comment-message"><strong>作者回复：</strong>{{ . }}</p>{{ end }}
     </article>
   {{ else }}
-    <p>还没有公开的留言，欢迎写下你的想法。</p>
+    <p class="comments-empty">还没有留言，欢迎写下你的想法。</p>
   {{ end }}
-  <p>无需注册。留言经作者审核后公开。</p>
+  </div>
+  <p>无需注册。提交后留言将自动公开。</p>
   <form name="blog-comments" method="POST" action="/comment-submitted/" data-netlify="true" netlify-honeypot="bot-field">
     <input type="hidden" name="form-name" value="blog-comments">
     <input type="hidden" name="post" value="{{ $key }}">
@@ -21,7 +23,10 @@
     <p><label for="comment-message">留言内容</label><textarea id="comment-message" name="message" rows="5" required maxlength="3000"></textarea></p>
     <button type="submit" class="btn btn-primary">提交留言</button>
   </form>
+  <p id="comment-status" role="status" aria-live="polite"></p>
+  <noscript>留言会自动公开；请启用 JavaScript 查看最新留言。</noscript>
 </section>
+<script src="/js/blog-comments.js" defer></script>
 <style>
   .moderated-comments { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #8884; }
   .moderated-comments label { display: block; margin-bottom: .35rem; }

@@ -1,0 +1,6 @@
+{
+  "name": "shunyang-personal-site",
+  "private": true,
+  "packageManager": "npm@10.9.4",
+  "dependencies": { "@netlify/blobs": "11.1.6" }
+}
