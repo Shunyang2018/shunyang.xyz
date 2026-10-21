@@ -1,0 +1,32 @@
+{{ $key := .Params.comments_key | default .File.ContentBaseName }}
+{{ $comments := index (site.Data.comments | default dict) $key }}
+<section class="moderated-comments" lang="zh-CN" aria-labelledby="comments-heading">
+  <h2 id="comments-heading">留言</h2>
+  {{ range $comments }}
+    <article class="reader-comment">
+      <p><strong>{{ .name }}</strong>{{ with .date }} <small>· {{ . }}</small>{{ end }}</p>
+      <p class="reader-comment-message">{{ .message }}</p>
+      {{ with .reply }}<p class="reader-comment-message"><strong>作者回复：</strong>{{ . }}</p>{{ end }}
+    </article>
+  {{ else }}
+    <p>还没有公开的留言，欢迎写下你的想法。</p>
+  {{ end }}
+  <p>无需注册。留言经作者审核后公开。</p>
+  <form name="blog-comments" method="POST" action="/comment-submitted/" data-netlify="true" netlify-honeypot="bot-field">
+    <input type="hidden" name="form-name" value="blog-comments">
+    <input type="hidden" name="post" value="{{ $key }}">
+    <input type="hidden" name="page" value="{{ .Permalink }}">
+    <p hidden><label>请留空 <input name="bot-field" tabindex="-1" autocomplete="off"></label></p>
+    <p><label for="comment-name">昵称</label><input id="comment-name" name="name" type="text" required maxlength="60" autocomplete="nickname"></p>
+    <p><label for="comment-message">留言内容</label><textarea id="comment-message" name="message" rows="5" required maxlength="3000"></textarea></p>
+    <button type="submit" class="btn btn-primary">提交留言</button>
+  </form>
+</section>
+<style>
+  .moderated-comments { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1px solid #8884; }
+  .moderated-comments label { display: block; margin-bottom: .35rem; }
+  .moderated-comments input:not([type="hidden"]), .moderated-comments textarea { width: 100%; padding: .65rem .8rem; border: 1px solid #8887; border-radius: .4rem; background: transparent; color: inherit; font: inherit; }
+  .moderated-comments textarea { resize: vertical; }
+  .moderated-comments .reader-comment { padding: 1rem 0; border-bottom: 1px solid #8883; }
+  .moderated-comments .reader-comment-message { white-space: pre-wrap; overflow-wrap: anywhere; }
+</style>

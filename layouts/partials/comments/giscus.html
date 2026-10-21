@@ -1,4 +1,6 @@
-{{ if site.Params.features.comment.giscus }}
+{{ if eq .Params.comment_provider "moderated" }}
+  {{ partial "comments/moderated.html" . }}
+{{ else if site.Params.features.comment.giscus }}
   {{ $config := site.Params.features.comment.giscus }}
   <script src="https://giscus.app/client.js"
           data-repo="{{$config.repo}}"
@@ -11,7 +13,7 @@
           data-emit-metadata="0"
           data-input-position="top"
           data-theme="{{ $config.theme | default "preferred_color_scheme" }}"
-          data-lang="{{ $config.language_code | default "en" }}"
+          data-lang="{{ .Params.comment_language | default $config.language_code | default "en" }}"
           data-loading="lazy"
           crossorigin="anonymous"
           async>
