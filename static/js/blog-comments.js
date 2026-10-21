@@ -39,13 +39,16 @@
     button.disabled = true;
     status.textContent = '正在提交……';
     try {
-      const response = await fetch('/', {
+      form.dataset.pendingId ||= crypto.randomUUID();
+      const response = await fetch(endpoint, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-        body: new URLSearchParams(data).toString()
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: form.dataset.pendingId, post: list.dataset.post,
+          name: data.get('name'), message: data.get('message'), 'bot-field': data.get('bot-field') })
       });
       if (!response.ok) throw new Error('Submission failed');
       form.reset();
+      delete form.dataset.pendingId;
       status.textContent = '留言已提交，正在同步……';
       for (let attempt = 0; attempt < 10; attempt++) {
         if (attempt) await new Promise((resolve) => setTimeout(resolve, 2000));

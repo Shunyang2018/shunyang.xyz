@@ -18,9 +18,9 @@ export function publicComment(payload) {
 export async function saveComment(store, payload) {
   const comment = publicComment(payload);
   if (!comment) return false;
-  // Separate keys avoid lost updates; event retries cannot duplicate a submission.
-  await store.setJSON(`${comment.post}/${comment.date}-${comment.id}`, comment);
-  return true;
+  // An atomic insert prevents retries or forged IDs from overwriting another comment.
+  const result = await store.setJSON(`${comment.post}/${comment.id}`, comment, { onlyIfNew: true });
+  return result?.modified !== false;
 }
 
 export async function readComments(store, post) {
